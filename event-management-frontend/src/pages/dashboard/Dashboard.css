@@ -1,3 +1,92 @@
 .dashboard {
-  padding: 1rem;
+    padding: 2rem;
+}
+
+.dashboard h1 {
+    margin-bottom: 2rem;
+    color: #333;
+    border-bottom: 2px solid #f0f0f0;
+    padding-bottom: 0.5rem;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1.5rem;
+}
+
+.stat-card {
+    display: flex;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    padding: 1.5rem;
+    transition: all 0.3s ease;
+}
+
+.stat-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.12);
+}
+
+.stat-icon {
+    font-size: 2.5rem;
+    margin-right: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-color: #f5f7fa;
+}
+
+.events-icon { background-color: #e3f2fd; }
+.clients-icon { background-color: #e8f5e9; }
+.invoices-icon { background-color: #fffde7; }
+.quotes-icon { background-color: #fff3e0; }
+.staff-icon { background-color: #f3e5f5; }
+
+.stat-content {
+    flex: 1;
+}
+
+.stat-content h3 {
+    margin: 0;
+    font-size: 1.1rem;
+    color: #555;
+}
+
+.stat-count {
+    font-size: 2rem;
+    font-weight: bold;
+    margin: 0.5rem 0;
+    color: #333;
+}
+
+.stat-link {
+    display: inline-block;
+    font-size: 0.9rem;
+    color: #4a69bd;
+    text-decoration: none;
+}
+
+.stat-link:hover {
+    text-decoration: underline;
+}
+
+.dashboard-loading {
+    text-align: center;
+    padding: 3rem;
+    font-size: 1.2rem;
+    color: #555;
+}
+
+.dashboard-error {
+    text-align: center;
+    padding: 2rem;
+    color: #d32f2f;
+    background-color: #ffebee;
+    border-radius: 8px;
+    margin: 2rem;
 }

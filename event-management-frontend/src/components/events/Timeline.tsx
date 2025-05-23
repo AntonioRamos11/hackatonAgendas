@@ -11,7 +11,16 @@ const Timeline: React.FC<{ eventId: string }> = ({ eventId }) => {
         const fetchTimeline = async () => {
             try {
                 const data = await getEventTimeline(eventId);
-                setTimeline(data);
+                // Map EventTimelineItem[] to EventTimeline[]
+                const mapped = Array.isArray(data)
+                  ? data.map(item => ({
+                        id: item.id,
+                        title: item.title,
+                        description: item.description,
+                        date: item.time // or format as needed
+                    }))
+                  : [];
+                setTimeline(mapped);
             } catch (err) {
                 setError('Failed to fetch event timeline');
             } finally {

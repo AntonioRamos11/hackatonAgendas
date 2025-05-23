@@ -1,0 +1,41 @@
+.events-container {
+  padding: 1.5rem;
+}
+
+.events-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.events-header h1 {
+  margin: 0;
+  color: #333;
+}
+
+.btn-create {
+  background-color: #4a69bd;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  transition: background-color 0.2s;
+}
+
+.btn-create:hover {
+  background-color: #3c5aa8;
+  text-decoration: none;
+}
+
+.btn-create:before {
+  content: "+";
+  margin-right: 6px;
+  font-size: 1.2rem;
+  line-height: 1;
+}

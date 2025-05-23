@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { getEventDetails } from '../../api/events';
+import { getEventDetail } from '../../api/events';
 import { Event } from '../../types/event';
 import Card from '../../components/common/Card';
 import Loader from '../../components/common/Loader';
@@ -14,7 +14,7 @@ const EventDetails: React.FC = () => {
     useEffect(() => {
         const fetchEventDetails = async () => {
             try {
-                const data = await getEventDetails(eventId);
+                const data = await getEventDetail(eventId);
                 setEvent(data);
             } catch (err) {
                 setError('Failed to fetch event details.');
