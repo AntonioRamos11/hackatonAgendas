@@ -1,0 +1,126 @@
+# Banquet Management System API (v1)
+
+## Authentication
+- POST /api/v1/auth/register
+  - Register new client or staff account
+  - Request: {email, password, name, role(client/staff/admin)}
+  - Response: {user_id, token}
+
+- POST /api/v1/auth/login
+  - Authenticate user (web & mobile)
+  - Request: {email, password}
+  - Response: {user_id, token, role}
+
+- GET /api/v1/auth/me
+  - Get current user profile
+  - Headers: Authorization Bearer {token}
+  - Response: {user data}
+
+## Events
+- GET /api/v1/events
+  - List all events (with filtering)
+  - Query params: ?status=upcoming&client_id=123
+  - Response: [{event_id, name, date, status, client_data}]
+
+- GET /api/v1/events/:id
+  - Get event details
+  - Response: {complete event details}
+
+- POST /api/v1/events
+  - Create new event
+  - Request: {event details}
+  - Response: {created event}
+
+- PUT /api/v1/events/:id
+  - Update event details
+  - Request: {updated fields}
+  - Response: {updated event}
+
+- GET /api/v1/events/:id/timeline
+  - Get event timeline (mobile-friendly format)
+  - Response: {chronological steps/activities}
+
+## Client Management
+- GET /api/v1/clients
+  - List all clients
+  - Response: [{client_id, name, contact_info}]
+
+- POST /api/v1/clients
+  - Add new client
+  - Request: {client details}
+  - Response: {created client}
+
+- GET /api/v1/clients/:id/events
+  - Get events for specific client
+  - Response: [{event summaries}]
+
+## Staff Management
+- GET /api/v1/staff
+  - List all staff members
+  - Response: [{staff_id, name, role, availability}]
+
+- POST /api/v1/staff/assignments
+  - Assign staff to event
+  - Request: {event_id, staff_id, role}
+  - Response: {assignment details}
+
+- GET /api/v1/staff/:id/schedule
+  - Get staff member's schedule
+  - Response: [{upcoming assignments}]
+
+## Inventory
+- GET /api/v1/inventory
+  - List all inventory items
+  - Query params: ?category=furniture&available=true
+  - Response: [{item_id, name, quantity, available}]
+
+- POST /api/v1/inventory/update
+  - Update inventory quantities
+  - Request: {item_id, quantity_change, reason}
+  - Response: {updated item}
+
+- GET /api/v1/inventory/availability
+  - Check availability for date range
+  - Query params: ?start_date=2025-05-30&end_date=2025-06-02
+  - Response: {available items with quantities}
+
+## Quotes & Billing
+- POST /api/v1/quotes
+  - Create quote for client
+  - Request: {client_id, event_details, items[]}
+  - Response: {quote details with pricing}
+
+- GET /api/v1/quotes/:id
+  - View quote details
+  - Response: {complete quote with items}
+
+- POST /api/v1/quotes/:id/approve
+  - Client approves quote (converts to booking)
+  - Response: {booking details}
+
+- GET /api/v1/invoices/:id
+  - Get invoice details
+  - Response: {invoice with payment status}
+
+## Notifications
+- POST /api/v1/notifications/register-device
+  - Register mobile device for push notifications
+  - Request: {user_id, device_token, platform}
+  - Response: {success status}
+
+- GET /api/v1/notifications
+  - Get user notifications
+  - Response: [{notification_id, message, read_status, timestamp}]
+
+- PUT /api/v1/notifications/:id/read
+  - Mark notification as read
+  - Response: {updated notification}
+
+## Standard Response Format
+{
+  "status": "success"|"error",
+  "data": {result data} | null,
+  "message": "Success message" | "Error description",
+  "errors": [detailed errors] | null,
+  "pagination": {total, page, per_page, total_pages} (when applicable)
+}
