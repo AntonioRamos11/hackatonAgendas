@@ -55,7 +55,11 @@ router.get('/v1/quotes/:id', authenticateToken, quoteController.getQuoteById);
 router.post('/v1/quotes/:id/approve', authenticateToken, quoteController.approveQuote);
 
 // Invoice routes
+router.post('/v1/invoices', authenticateToken, invoiceController.createInvoice);
+router.get('/v1/invoices', authenticateToken, invoiceController.getInvoices);
 router.get('/v1/invoices/:id', authenticateToken, invoiceController.getInvoiceById);
+router.put('/v1/invoices/:id', authenticateToken, invoiceController.updateInvoice);
+router.post('/v1/invoices/:id/payment', authenticateToken, invoiceController.recordPayment);
 
 // Notification routes
 router.post('/v1/notifications/register-device', authenticateToken, notificationController.registerDevice);

@@ -240,23 +240,18 @@ async function runTests() {
     if (quotesResult.success) {
       // Only run quote creation if listing works
       const newQuoteResult = await runner.runTest('Create Quote', 'POST', '/v1/quotes', {
-        clientId: clientId || userId, // Use the current user ID as fallback
+        clientId: userId,
         eventId: eventId,
-        name: 'Test Quote', 
+        name: 'Test Automation Quote',
+        notes: 'Created via automated testing',
         items: [
           {
-            
-            description: 'Venue Rental',
-            quantity: 1,
-            unitPrice: 1500.00
-          },
-          {
-            description: 'Catering Services',
-            quantity: 100,
-            unitPrice: 45.00
+            inventoryId: inventoryId || "00000000-0000-0000-0000-000000000000", // Make sure this is a valid UUID
+            quantity: 2,
+            unitPrice: 100.00,
+            total: 200.00 // This should be quantity * unitPrice
           }
-        ],
-        notes: 'Created via test automation'
+        ]
       }, 201);
       
       if (newQuoteResult.success && newQuoteResult.data.data) {
@@ -269,25 +264,31 @@ async function runTests() {
         await runner.runTest('Update Quote', 'PUT', `/v1/quotes/${quoteId}`, {
           items: [
             {
+              inventoryId: inventoryId, // Add required inventoryId
               description: 'Venue Rental',
               quantity: 1,
-              unitPrice: 1800.00
+              unitPrice: 1800.00,
+              total: 1800.00 // Add required total
             },
             {
+              inventoryId: inventoryId, // Use the same inventory ID for testing
               description: 'Catering Services',
               quantity: 150,
-              unitPrice: 45.00
+              unitPrice: 45.00,
+              total: 6750.00 // Add required total
             },
             {
+              inventoryId: inventoryId, // Use the same inventory ID for testing
               description: 'Decoration',
               quantity: 1,
-              unitPrice: 500.00
+              unitPrice: 500.00,
+              total: 500.00 // Add required total
             }
           ],
           notes: 'Updated via test automation'
         });
         
-        await runner.runTest('Approve Quote', 'POST', `/v1/quotes/${quoteId}/approve`);
+        await runner.runTest('Approve Quote', 'POST', `/v1/quotes/${quoteId}/approve`, {});
         
         // Create an invoice based on the quote
         const newInvoiceResult = await runner.runTest('Create Invoice', 'POST', '/v1/invoices', {
