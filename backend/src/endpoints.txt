@@ -1,2 +1,0 @@
-Document endpoints (e.g., GET /api/events, POST /api/quotes) for all modules.
-
