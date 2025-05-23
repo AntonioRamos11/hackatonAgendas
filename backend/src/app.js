@@ -28,8 +28,36 @@ const PORT = process.env.PORT || 5000;
 
 // Middleware
 app.use(cors());
-app.use(bodyParser.json());
+app.use(bodyParser.json({
+  // Return a 400 error for JSON parsing failures rather than crashing
+  verify: (req, res, buf, encoding) => {
+    try {
+      JSON.parse(buf);
+    } catch (e) {
+      res.status(400).json({
+        status: 'error',
+        message: 'Invalid JSON payload',
+        errors: [e.message]
+      });
+      throw new Error('Invalid JSON');
+    }
+  }
+}));
 app.use(bodyParser.urlencoded({ extended: true }));
+
+// Add this middleware after your body-parser setup
+
+// Error handler for JSON parsing failures
+app.use((err, req, res, next) => {
+  if (err instanceof SyntaxError && err.status === 400 && 'body' in err) {
+    return res.status(400).json({
+      status: 'error',
+      message: 'Invalid JSON in request body',
+      errors: [err.message]
+    });
+  }
+  next(err);
+});
 
 // Connect to the database
 connectToDatabase();
@@ -79,6 +107,18 @@ app.use((err, req, res, next) => {
     data: null,
     errors: [err.message]
   });
+});
+
+// Add an error handler for body-parser errors
+app.use((err, req, res, next) => {
+  if (err instanceof SyntaxError && err.status === 400 && 'body' in err) {
+    return res.status(400).json({
+      status: 'error',
+      message: 'Invalid JSON payload',
+      errors: [err.message]
+    });
+  }
+  next(err);
 });
 
 // Start the server

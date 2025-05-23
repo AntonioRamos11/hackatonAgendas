@@ -57,9 +57,16 @@ exports.getEvents = async (req, res) => {
 // Get event by ID
 exports.getEventById = async (req, res) => {
   try {
-    const event = await Event.findByPk(req.params.id, {
+    const eventId = req.params.id;
+    
+    const event = await Event.findByPk(eventId, {
       include: [
-        { model: User, as: 'client', attributes: ['id', 'name', 'email', 'phoneNumber'] }
+        {
+          model: User, 
+          as: 'eventClient', // Make sure this matches your association alias in dbInit.js
+          attributes: ['id', 'name', 'email', 'phone'] // Change 'phoneNumber' to 'phone'
+        },
+        // Other includes...
       ]
     });
     
@@ -67,8 +74,7 @@ exports.getEventById = async (req, res) => {
       return res.status(404).json({
         status: 'error',
         message: 'Event not found',
-        data: null,
-        errors: ['Event does not exist']
+        data: null
       });
     }
     
@@ -78,6 +84,7 @@ exports.getEventById = async (req, res) => {
       data: event
     });
   } catch (error) {
+    console.error('Error fetching event:', error);
     res.status(500).json({
       status: 'error',
       message: 'Error retrieving event',

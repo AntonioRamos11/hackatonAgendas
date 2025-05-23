@@ -6,15 +6,26 @@ exports.getClients = async (req, res) => {
   try {
     const clients = await User.findAll({
       where: { role: 'client' },
-      attributes: ['id', 'name', 'email', 'phoneNumber', 'address']
+      attributes: [
+        'id', 
+        'name', 
+        'email', 
+        'phone',       // Changed from 'phoneNumber' to 'phone'
+        'company', 
+        'position',
+        'notes',
+        'createdAt'
+      ],
+      order: [['createdAt', 'DESC']]
     });
-    
+
     res.status(200).json({
       status: 'success',
       message: 'Clients retrieved successfully',
       data: clients
     });
   } catch (error) {
+    console.error('Error fetching clients:', error);
     res.status(500).json({
       status: 'error',
       message: 'Error retrieving clients',

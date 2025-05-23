@@ -1,0 +1,338 @@
+API Endpoints List with Frontend Implementation
+1. Authentication Endpoints
+javascript
+// Login
+const login = async (email, password) => {
+  try {
+    const response = await axios.post('/api/v1/auth/login', {
+      email,
+      password
+    });
+    return response.data;
+  } catch (error) {
+    throw error.response.data;
+  }
+};
+
+// Register
+const register = async (userData) => {
+  try {
+    const response = await axios.post('/api/v1/auth/register', userData);
+    return response.data;
+  } catch (error) {
+    throw error.response.data;
+  }
+};
+
+// Get Profile
+const getProfile = async (token) => {
+  try {
+    const response = await axios.get('/api/v1/auth/me', {
+      headers: { Authorization: `Bearer ${token}` }
+    });
+    return response.data;
+  } catch (error) {
+    throw error.response.data;
+  }
+};
+2. Event Endpoints
+javascript
+// List Events
+const getEvents = async (params = {}) => {
+  try {
+    const response = await axios.get('/api/v1/events', { params });
+    return response.data;
+  } catch (error) {
+    throw error.response.data;
+  }
+};
+
+// Create Event
+const createEvent = async (eventData) => {
+  try {
+    const response = await axios.post('/api/v1/events', eventData);
+    return response.data;
+  } catch (error) {
+    throw error.response.data;
+  }
+};
+
+// Get Event Details
+const getEvent = async (eventId) => {
+  try {
+    const response = await axios.get(`/api/v1/events/${eventId}`);
+    return response.data;
+  } catch (error) {
+    throw error.response.data;
+  }
+};
+
+// Update Event
+const updateEvent = async (eventId, eventData) => {
+  try {
+    const response = await axios.put(`/api/v1/events/${eventId}`, eventData);
+    return response.data;
+  } catch (error) {
+    throw error.response.data;
+  }
+};
+
+// Update Event Status
+const updateEventStatus = async (eventId, status) => {
+  try {
+    const response = await axios.post(`/api/v1/events/${eventId}/status`, { status });
+    return response.data;
+  } catch (error) {
+    throw error.response.data;
+  }
+};
+3. Client Endpoints
+javascript
+// List Clients
+const getClients = async (params = {}) => {
+  try {
+    const response = await axios.get('/api/v1/clients', { params });
+    return response.data;
+  } catch (error) {
+    throw error.response.data;
+  }
+};
+
+// Create Client
+const createClient = async (clientData) => {
+  try {
+    const response = await axios.post('/api/v1/clients', clientData);
+    return response.data;
+  } catch (error) {
+    throw error.response.data;
+  }
+};
+
+// Get Client Details
+const getClient = async (clientId) => {
+  try {
+    const response = await axios.get(`/api/v1/clients/${clientId}`);
+    return response.data;
+  } catch (error) {
+    throw error.response.data;
+  }
+};
+
+// Update Client
+const updateClient = async (clientId, clientData) => {
+  try {
+    const response = await axios.put(`/api/v1/clients/${clientId}`, clientData);
+    return response.data;
+  } catch (error) {
+    throw error.response.data;
+  }
+};
+4. Staff Endpoints
+javascript
+// List Staff
+const getStaff = async () => {
+  try {
+    const response = await axios.get('/api/v1/staff');
+    return response.data;
+  } catch (error) {
+    throw error.response.data;
+  }
+};
+
+// Create Staff
+const createStaff = async (staffData) => {
+  try {
+    const response = await axios.post('/api/v1/staff', staffData);
+    return response.data;
+  } catch (error) {
+    throw error.response.data;
+  }
+};
+
+// Assign Staff to Event
+const assignStaff = async (assignmentData) => {
+  try {
+    const response = await axios.post('/api/v1/staff/assignments', assignmentData);
+    return response.data;
+  } catch (error) {
+    throw error.response.data;
+  }
+};
+5. Inventory Endpoints
+javascript
+// List Inventory
+const getInventory = async () => {
+  try {
+    const response = await axios.get('/api/v1/inventory');
+    return response.data;
+  } catch (error) {
+    throw error.response.data;
+  }
+};
+
+// Create Inventory Item
+const createInventoryItem = async (itemData) => {
+  try {
+    const response = await axios.post('/api/v1/inventory', itemData);
+    return response.data;
+  } catch (error) {
+    throw error.response.data;
+  }
+};
+
+// Update Inventory Item
+const updateInventoryItem = async (itemId, itemData) => {
+  try {
+    const response = await axios.put(`/api/v1/inventory/${itemId}`, itemData);
+    return response.data;
+  } catch (error) {
+    throw error.response.data;
+  }
+};
+6. Quote & Invoice Endpoints
+javascript
+// Create Quote
+const createQuote = async (quoteData) => {
+  try {
+    const response = await axios.post('/api/v1/quotes', quoteData);
+    return response.data;
+  } catch (error) {
+    throw error.response.data;
+  }
+};
+
+// Approve Quote
+const approveQuote = async (quoteId) => {
+  try {
+    const response = await axios.post(`/api/v1/quotes/${quoteId}/approve`);
+    return response.data;
+  } catch (error) {
+    throw error.response.data;
+  }
+};
+
+// Create Invoice
+const createInvoice = async (invoiceData) => {
+  try {
+    const response = await axios.post('/api/v1/invoices', invoiceData);
+    return response.data;
+  } catch (error) {
+    throw error.response.data;
+  }
+};
+7. Notification Endpoints
+javascript
+// List Notifications
+const getNotifications = async (userId) => {
+  try {
+    const response = await axios.get('/api/v1/notifications', { params: { userId } });
+    return response.data;
+  } catch (error) {
+    throw error.response.data;
+  }
+};
+
+// Mark Notification as Read
+const markNotificationAsRead = async (notificationId) => {
+  try {
+    const response = await axios.put(`/api/v1/notifications/${notificationId}/read`, {});
+    return response.data;
+  } catch (error) {
+    throw error.response.data;
+  }
+};
+Frontend API Service Implementation
+Create an apiService.js file:
+
+javascript
+import axios from 'axios';
+
+// Configure axios instance
+const api = axios.create({
+  baseURL: '/api/v1',
+  timeout: 10000,
+});
+
+// Add request interceptor for auth token
+api.interceptors.request.use((config) => {
+  const token = localStorage.getItem('authToken');
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
+}, (error) => {
+  return Promise.reject(error);
+});
+
+// Add response interceptor for error handling
+api.interceptors.response.use((response) => {
+  return response.data;
+}, (error) => {
+  if (error.response && error.response.status === 401) {
+    // Handle unauthorized (token expired)
+    localStorage.removeItem('authToken');
+    window.location = '/login';
+  }
+  return Promise.reject(error.response?.data || error.message);
+});
+
+export default {
+  // Authentication
+  login: (credentials) => api.post('/auth/login', credentials),
+  register: (userData) => api.post('/auth/register', userData),
+  getProfile: () => api.get('/auth/me'),
+  
+  // Events
+  getEvents: (params) => api.get('/events', { params }),
+  createEvent: (eventData) => api.post('/events', eventData),
+  getEvent: (eventId) => api.get(`/events/${eventId}`),
+  updateEvent: (eventId, eventData) => api.put(`/events/${eventId}`, eventData),
+  
+  // Clients
+  getClients: () => api.get('/clients'),
+  createClient: (clientData) => api.post('/clients', clientData),
+  getClient: (clientId) => api.get(`/clients/${clientId}`),
+  
+  // Staff
+  getStaff: () => api.get('/staff'),
+  createStaff: (staffData) => api.post('/staff', staffData),
+  
+  // Inventory
+  getInventory: () => api.get('/inventory'),
+  createInventoryItem: (itemData) => api.post('/inventory', itemData),
+  
+  // Quotes & Invoices
+  createQuote: (quoteData) => api.post('/quotes', quoteData),
+  approveQuote: (quoteId) => api.post(`/quotes/${quoteId}/approve`),
+  createInvoice: (invoiceData) => api.post('/invoices', invoiceData),
+  
+  // Notifications
+  getNotifications: (userId) => api.get('/notifications', { params: { userId } }),
+  markNotificationAsRead: (notificationId) => api.put(`/notifications/${notificationId}/read`, {}),
+};
+Usage in Components
+javascript
+import apiService from './services/apiService';
+
+// Example component usage
+async function fetchEvents() {
+  try {
+    const events = await apiService.getEvents();
+    console.log('Events:', events);
+  } catch (error) {
+    console.error('Error fetching events:', error);
+  }
+}
+
+async function createNewEvent() {
+  try {
+    const newEvent = await apiService.createEvent({
+      name: 'Wedding Reception',
+      date: '2025-06-15T18:00:00Z',
+      // other event data
+    });
+    console.log('Created event:', newEvent);
+  } catch (error) {
+    console.error('Error creating event:', error);
+  }
+}

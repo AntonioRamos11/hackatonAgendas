@@ -1,6 +1,5 @@
 const { sequelize } = require('../config/database');
-const Quote = require('../models/Quote');
-const QuoteItem = require('../models/QuoteItem');
+const { Quote, QuoteItem, QuoteService } = require('../models/Quote');
 const User = require('../models/User');
 const Event = require('../models/Event');
 const Inventory = require('../models/Inventory');
@@ -13,16 +12,17 @@ exports.getQuotes = async (req, res) => {
       include: [
         {
           model: User,
-          as: 'client',
+          as: 'quoteClient',
           attributes: ['id', 'name', 'email']
         },
         {
           model: Event,
+          as: 'event',
           attributes: ['id', 'name', 'date']
         },
         {
           model: QuoteItem,
-          as: 'items'
+          as: 'quoteItems'
         }
       ]
     });
@@ -47,6 +47,23 @@ exports.createQuote = async (req, res) => {
   try {
     const { clientId, eventId, name, items, notes } = req.body;
     
+    // Validate items data
+    if (items && items.length > 0) {
+      // Check if all required fields exist for each item
+      const invalidItems = items.filter(item => 
+        !item.inventoryId || !item.quantity || !item.unitPrice || !item.total
+      );
+      
+      if (invalidItems.length > 0) {
+        return res.status(400).json({
+          status: 'error',
+          message: 'Invalid quote items data',
+          data: null,
+          errors: ['All quote items must include inventoryId, quantity, unitPrice, and total']
+        });
+      }
+    }
+    
     // Create the quote
     const quote = await Quote.create({
       clientId,
@@ -66,12 +83,12 @@ exports.createQuote = async (req, res) => {
       await QuoteItem.bulkCreate(quoteItems);
     }
     
-    // Get the complete quote with items
+    // Get the complete quote with items - FIXED ASSOCIATION NAME
     const completeQuote = await Quote.findByPk(quote.id, {
       include: [
         {
           model: QuoteItem,
-          as: 'items'
+          as: 'quoteItems'  // Changed from 'items' to match dbInit.js
         }
       ]
     });
@@ -82,6 +99,7 @@ exports.createQuote = async (req, res) => {
       data: completeQuote
     });
   } catch (error) {
+    console.error('Error creating quote:', error);
     res.status(400).json({
       status: 'error',
       message: 'Error creating quote',
@@ -100,16 +118,17 @@ exports.getQuoteById = async (req, res) => {
       include: [
         {
           model: User,
-          as: 'client',
+          as: 'quoteClient',  // Changed from 'client'
           attributes: ['id', 'name', 'email']
         },
         {
           model: Event,
+          as: 'event',
           attributes: ['id', 'name', 'date']
         },
         {
           model: QuoteItem,
-          as: 'items'
+          as: 'quoteItems'  // Changed from 'items'
         }
       ]
     });
@@ -181,7 +200,7 @@ exports.updateQuote = async (req, res) => {
       include: [
         {
           model: QuoteItem,
-          as: 'items'
+          as: 'quoteItems'  // Changed from 'items'
         }
       ]
     });

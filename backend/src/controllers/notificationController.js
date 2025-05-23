@@ -75,8 +75,12 @@ exports.markAsRead = async (req, res) => {
     const notificationId = req.params.id;
     const userId = req.user.id;
     
+    // Find the notification
     const notification = await Notification.findOne({
-      where: { id: notificationId, userId }
+      where: { 
+        id: notificationId,
+        userId: userId
+      }
     });
     
     if (!notification) {
@@ -84,11 +88,13 @@ exports.markAsRead = async (req, res) => {
         status: 'error',
         message: 'Notification not found',
         data: null,
-        errors: ['Notification does not exist']
+        errors: ['Notification does not exist or does not belong to this user']
       });
     }
     
-    await notification.update({ read: true });
+    // Update the notification
+    notification.read = true;
+    await notification.save();
     
     res.status(200).json({
       status: 'success',
@@ -96,9 +102,10 @@ exports.markAsRead = async (req, res) => {
       data: notification
     });
   } catch (error) {
-    res.status(400).json({
+    console.error('Error marking notification as read:', error);
+    res.status(500).json({
       status: 'error',
-      message: 'Error updating notification',
+      message: 'Error marking notification as read',
       data: null,
       errors: [error.message]
     });

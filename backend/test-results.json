@@ -1,5 +1,5 @@
 {
-  "timestamp": "2025-05-23T18:56:39.326Z",
+  "timestamp": "2025-05-23T19:32:36.846Z",
   "baseUrl": "http://localhost:5000/api",
   "tests": [
     {
@@ -11,16 +11,16 @@
         "status": "success",
         "message": "User profile retrieved",
         "data": {
-          "id": "1c69dc93-e7cd-4982-83a0-7584d2911dde",
+          "id": "3e5fb6d7-0b79-450c-83d6-d893e9f86da4",
           "name": "Test Admin",
-          "email": "testadmin1748026598943@example.com",
+          "email": "testadmin1748028756456@example.com",
           "role": "admin",
           "phone": null,
           "company": null,
           "position": null,
           "notes": null,
-          "createdAt": "2025-05-23T18:56:38.948Z",
-          "updatedAt": "2025-05-23T18:56:38.948Z"
+          "createdAt": "2025-05-23T19:32:36.460Z",
+          "updatedAt": "2025-05-23T19:32:36.460Z"
         }
       },
       "error": null
@@ -33,11 +33,67 @@
       "data": {
         "status": "success",
         "message": "Events retrieved successfully",
-        "data": [],
+        "data": [
+          {
+            "id": "7650b44f-b5e9-40c2-8472-c3666b503162",
+            "name": "Updated Event Name",
+            "date": "2025-08-01T18:00:00.000Z",
+            "status": "confirmed",
+            "client": {
+              "id": "2389f6e2-5d78-4443-a463-eca4ea4404d2",
+              "name": "Test Admin",
+              "email": "testadmin1748026907108@example.com"
+            }
+          },
+          {
+            "id": "8ba63a4c-696b-4226-8334-b74f34a09ca1",
+            "name": "Updated Event Name",
+            "date": "2025-08-01T18:00:00.000Z",
+            "status": "confirmed",
+            "client": {
+              "id": "5952d454-4fe7-4ca1-804a-438f40c59641",
+              "name": "Test Admin",
+              "email": "testadmin1748028231395@example.com"
+            }
+          },
+          {
+            "id": "c5198adf-05c6-408a-94b7-6fd0d0fb8bde",
+            "name": "Updated Event Name",
+            "date": "2025-08-01T18:00:00.000Z",
+            "status": "confirmed",
+            "client": {
+              "id": "7b961ce5-7168-4fd7-9205-15fd6cdf0c73",
+              "name": "Test Admin",
+              "email": "testadmin1748028235534@example.com"
+            }
+          },
+          {
+            "id": "581a5ead-33fa-45de-8e07-3baeafdf42a7",
+            "name": "Updated Event Name",
+            "date": "2025-08-01T18:00:00.000Z",
+            "status": "confirmed",
+            "client": {
+              "id": "adfbb110-2a9c-473d-b2ee-df4c111c29af",
+              "name": "Test Admin",
+              "email": "testadmin1748028583819@example.com"
+            }
+          },
+          {
+            "id": "8db9022d-893a-4460-af4d-b61f4be48e8a",
+            "name": "Updated Event Name",
+            "date": "2025-08-01T18:00:00.000Z",
+            "status": "confirmed",
+            "client": {
+              "id": "3a68c451-1938-4648-80fc-713c84b87e01",
+              "name": "Test Admin",
+              "email": "testadmin1748028738511@example.com"
+            }
+          }
+        ],
         "pagination": {
-          "total": 0,
+          "total": 5,
           "page": 1,
-          "per_page": 0,
+          "per_page": 5,
           "total_pages": 1
         }
       },
@@ -52,15 +108,15 @@
         "status": "success",
         "message": "Event created successfully",
         "data": {
-          "id": "a54736b5-88d7-4835-8b46-086a8796a330",
+          "id": "9c434aa6-3d47-46ed-bca5-0d6c0772e853",
           "status": "pending",
           "name": "Test Automation Event",
           "date": "2025-08-01T18:00:00.000Z",
           "endDate": "2025-08-01T23:00:00.000Z",
           "location": "Test Venue",
-          "clientId": "1c69dc93-e7cd-4982-83a0-7584d2911dde",
-          "updatedAt": "2025-05-23T18:56:39.089Z",
-          "createdAt": "2025-05-23T18:56:39.089Z",
+          "clientId": "3e5fb6d7-0b79-450c-83d6-d893e9f86da4",
+          "updatedAt": "2025-05-23T19:32:36.598Z",
+          "createdAt": "2025-05-23T19:32:36.598Z",
           "description": null,
           "guestCount": null,
           "budget": null,
@@ -71,55 +127,72 @@
     },
     {
       "name": "Get Event Details",
-      "endpoint": "GET /v1/events/a54736b5-88d7-4835-8b46-086a8796a330",
-      "status": 500,
-      "success": false,
+      "endpoint": "GET /v1/events/9c434aa6-3d47-46ed-bca5-0d6c0772e853",
+      "status": 200,
+      "success": true,
       "data": {
-        "status": "error",
-        "message": "Error retrieving event",
-        "data": null,
-        "errors": [
-          "column client.phoneNumber does not exist"
-        ]
+        "status": "success",
+        "message": "Event retrieved successfully",
+        "data": {
+          "id": "9c434aa6-3d47-46ed-bca5-0d6c0772e853",
+          "name": "Test Automation Event",
+          "date": "2025-08-01T18:00:00.000Z",
+          "endDate": "2025-08-01T23:00:00.000Z",
+          "location": "Test Venue",
+          "clientId": "3e5fb6d7-0b79-450c-83d6-d893e9f86da4",
+          "status": "pending",
+          "description": null,
+          "guestCount": null,
+          "budget": null,
+          "specialRequirements": null,
+          "createdAt": "2025-05-23T19:32:36.598Z",
+          "updatedAt": "2025-05-23T19:32:36.598Z",
+          "eventClient": {
+            "id": "3e5fb6d7-0b79-450c-83d6-d893e9f86da4",
+            "name": "Test Admin",
+            "email": "testadmin1748028756456@example.com",
+            "phone": null
+          }
+        }
       },
-      "error": "Request failed with status code 500"
+      "error": null
     },
     {
       "name": "Update Event",
-      "endpoint": "PUT /v1/events/a54736b5-88d7-4835-8b46-086a8796a330",
+      "endpoint": "PUT /v1/events/9c434aa6-3d47-46ed-bca5-0d6c0772e853",
       "status": 200,
       "success": true,
       "data": {
         "status": "success",
         "message": "Event updated successfully",
         "data": {
-          "id": "a54736b5-88d7-4835-8b46-086a8796a330",
+          "id": "9c434aa6-3d47-46ed-bca5-0d6c0772e853",
           "name": "Updated Event Name",
           "date": "2025-08-01T18:00:00.000Z",
           "endDate": "2025-08-01T23:00:00.000Z",
           "location": "Test Venue",
-          "clientId": "1c69dc93-e7cd-4982-83a0-7584d2911dde",
+          "clientId": "3e5fb6d7-0b79-450c-83d6-d893e9f86da4",
           "status": "pending",
           "description": null,
           "guestCount": null,
           "budget": null,
           "specialRequirements": null,
-          "createdAt": "2025-05-23T18:56:39.089Z",
-          "updatedAt": "2025-05-23T18:56:39.107Z"
+          "createdAt": "2025-05-23T19:32:36.598Z",
+          "updatedAt": "2025-05-23T19:32:36.612Z"
         }
       },
       "error": null
     },
     {
       "name": "Get Event Timeline",
-      "endpoint": "GET /v1/events/a54736b5-88d7-4835-8b46-086a8796a330/timeline",
+      "endpoint": "GET /v1/events/9c434aa6-3d47-46ed-bca5-0d6c0772e853/timeline",
       "status": 200,
       "success": true,
       "data": {
         "status": "success",
         "message": "Event timeline retrieved successfully",
         "data": {
-          "event_id": "a54736b5-88d7-4835-8b46-086a8796a330",
+          "event_id": "9c434aa6-3d47-46ed-bca5-0d6c0772e853",
           "name": "Updated Event Name",
           "date": "2025-08-01T18:00:00.000Z",
           "timeline": []
@@ -129,26 +202,26 @@
     },
     {
       "name": "Update Event Status",
-      "endpoint": "POST /v1/events/a54736b5-88d7-4835-8b46-086a8796a330/status",
+      "endpoint": "POST /v1/events/9c434aa6-3d47-46ed-bca5-0d6c0772e853/status",
       "status": 200,
       "success": true,
       "data": {
         "status": "success",
         "message": "Event status updated successfully",
         "data": {
-          "id": "a54736b5-88d7-4835-8b46-086a8796a330",
+          "id": "9c434aa6-3d47-46ed-bca5-0d6c0772e853",
           "name": "Updated Event Name",
           "date": "2025-08-01T18:00:00.000Z",
           "endDate": "2025-08-01T23:00:00.000Z",
           "location": "Test Venue",
-          "clientId": "1c69dc93-e7cd-4982-83a0-7584d2911dde",
+          "clientId": "3e5fb6d7-0b79-450c-83d6-d893e9f86da4",
           "status": "confirmed",
           "description": null,
           "guestCount": null,
           "budget": null,
           "specialRequirements": null,
-          "createdAt": "2025-05-23T18:56:39.089Z",
-          "updatedAt": "2025-05-23T18:56:39.117Z"
+          "createdAt": "2025-05-23T19:32:36.598Z",
+          "updatedAt": "2025-05-23T19:32:36.621Z"
         }
       },
       "error": null
@@ -156,17 +229,125 @@
     {
       "name": "List Clients",
       "endpoint": "GET /v1/clients",
-      "status": 500,
-      "success": false,
+      "status": 200,
+      "success": true,
       "data": {
-        "status": "error",
-        "message": "Error retrieving clients",
-        "data": null,
-        "errors": [
-          "column \"phoneNumber\" does not exist"
+        "status": "success",
+        "message": "Clients retrieved successfully",
+        "data": [
+          {
+            "id": "a049ca66-7b22-4405-b853-6de063e9ea29",
+            "name": "Test Client",
+            "email": "client1748028738678@example.com",
+            "phone": "555-123-4567",
+            "company": "Test Company",
+            "position": null,
+            "notes": "Created via test automation",
+            "createdAt": "2025-05-23T19:32:18.681Z"
+          },
+          {
+            "id": "40733803-0490-4708-a485-5fe756d452b8",
+            "name": "Updated Client Name",
+            "email": "client1748028721716@example.com",
+            "phone": "555-987-6543",
+            "company": "Test Company",
+            "position": null,
+            "notes": "Updated via test automation",
+            "createdAt": "2025-05-23T19:32:01.718Z"
+          },
+          {
+            "id": "3058c4a1-61a1-4330-9b4a-08a729a483b1",
+            "name": "Updated Client Name",
+            "email": "client1748028231575@example.com",
+            "phone": "555-987-6543",
+            "company": "Test Company",
+            "position": null,
+            "notes": "Updated via test automation",
+            "createdAt": "2025-05-23T19:23:51.578Z"
+          },
+          {
+            "id": "bbb29a12-8e80-47c6-bd68-6b379f4fea96",
+            "name": "Updated Client Name",
+            "email": "client1748028226198@example.com",
+            "phone": "555-987-6543",
+            "company": "Test Company",
+            "position": null,
+            "notes": "Updated via test automation",
+            "createdAt": "2025-05-23T19:23:46.199Z"
+          },
+          {
+            "id": "96a9016d-ab2a-4d6d-afbf-86d840a1d2c7",
+            "name": "Updated Client Name",
+            "email": "client1748026797595@example.com",
+            "phone": "555-987-6543",
+            "company": "Test Company",
+            "position": null,
+            "notes": "Updated via test automation",
+            "createdAt": "2025-05-23T18:59:57.596Z"
+          },
+          {
+            "id": "0565777e-8c2c-4ad1-afac-e4cc1d47be16",
+            "name": "Test Client",
+            "email": "client1748026266684@example.com",
+            "phone": "555-123-4567",
+            "company": "Test Company",
+            "position": null,
+            "notes": "Created via test automation",
+            "createdAt": "2025-05-23T18:51:06.686Z"
+          },
+          {
+            "id": "5cfa0877-c325-48c6-a891-5005d9d9fc3e",
+            "name": "New Test User",
+            "email": "test1748026266582@example.com",
+            "phone": null,
+            "company": null,
+            "position": null,
+            "notes": null,
+            "createdAt": "2025-05-23T18:51:06.587Z"
+          },
+          {
+            "id": "7788cc83-97de-421d-8286-d277be27b651",
+            "name": "Test Client",
+            "email": "client1748026183474@example.com",
+            "phone": "555-123-4567",
+            "company": "Test Company",
+            "position": null,
+            "notes": "Created via test automation",
+            "createdAt": "2025-05-23T18:49:43.476Z"
+          },
+          {
+            "id": "b5a25f93-33f9-4900-8669-b26320489a08",
+            "name": "New Test User",
+            "email": "test1748026183394@example.com",
+            "phone": null,
+            "company": null,
+            "position": null,
+            "notes": null,
+            "createdAt": "2025-05-23T18:49:43.397Z"
+          },
+          {
+            "id": "8ade896a-00f8-4281-8f10-89d9e8c2b9ba",
+            "name": "Test Client",
+            "email": "client1748026168876@example.com",
+            "phone": "555-123-4567",
+            "company": "Test Company",
+            "position": null,
+            "notes": "Created via test automation",
+            "createdAt": "2025-05-23T18:49:28.879Z"
+          },
+          {
+            "id": "5623a97d-fc40-4797-98f8-16f3ba859e23",
+            "name": "New Test User",
+            "email": "test1748026168778@example.com",
+            "phone": null,
+            "company": null,
+            "position": null,
+            "notes": null,
+            "createdAt": "2025-05-23T18:49:28.782Z"
+          }
         ]
       },
-      "error": "Request failed with status code 500"
+      "error": null
     },
     {
       "name": "Create Client",
@@ -177,17 +358,75 @@
         "status": "success",
         "message": "Client added successfully",
         "data": {
-          "id": "f1d05727-20d5-44f0-a897-b8f769ee728e",
+          "id": "9103a8e0-486c-46dc-b045-1c921aa7ae44",
           "name": "Test Client",
-          "email": "client1748026599122@example.com",
+          "email": "client1748028756629@example.com",
           "phone": "555-123-4567",
           "company": "Test Company",
-          "password": "$2b$10$lnb1PkuTSkUSREAAQ4sWNeV2JZ5ENTv8.XobB/NV6q9ETmjNg6o6O",
+          "password": "$2b$10$6ShWU2JB3DnXao0vVr0IZeUsjO4OWipkvZi2Hv1vsYKGF3rnVpuke",
           "notes": "Created via test automation",
           "role": "client",
-          "updatedAt": "2025-05-23T18:56:39.124Z",
-          "createdAt": "2025-05-23T18:56:39.124Z",
+          "updatedAt": "2025-05-23T19:32:36.631Z",
+          "createdAt": "2025-05-23T19:32:36.631Z",
           "position": null
+        }
+      },
+      "error": null
+    },
+    {
+      "name": "Get Client Details",
+      "endpoint": "GET /v1/clients/a049ca66-7b22-4405-b853-6de063e9ea29",
+      "status": 200,
+      "success": true,
+      "data": {
+        "status": "success",
+        "message": "Client retrieved successfully",
+        "data": {
+          "id": "a049ca66-7b22-4405-b853-6de063e9ea29",
+          "name": "Test Client",
+          "email": "client1748028738678@example.com",
+          "role": "client",
+          "phone": "555-123-4567",
+          "company": "Test Company",
+          "position": null,
+          "notes": "Created via test automation",
+          "createdAt": "2025-05-23T19:32:18.681Z",
+          "updatedAt": "2025-05-23T19:32:18.681Z"
+        }
+      },
+      "error": null
+    },
+    {
+      "name": "Get Client Events",
+      "endpoint": "GET /v1/clients/a049ca66-7b22-4405-b853-6de063e9ea29/events",
+      "status": 200,
+      "success": true,
+      "data": {
+        "status": "success",
+        "message": "User events retrieved successfully",
+        "data": []
+      },
+      "error": null
+    },
+    {
+      "name": "Update Client",
+      "endpoint": "PUT /v1/clients/a049ca66-7b22-4405-b853-6de063e9ea29",
+      "status": 200,
+      "success": true,
+      "data": {
+        "status": "success",
+        "message": "Client updated successfully",
+        "data": {
+          "id": "a049ca66-7b22-4405-b853-6de063e9ea29",
+          "name": "Updated Client Name",
+          "email": "client1748028738678@example.com",
+          "role": "client",
+          "phone": "555-987-6543",
+          "company": "Test Company",
+          "position": null,
+          "notes": "Updated via test automation",
+          "createdAt": "2025-05-23T19:32:18.681Z",
+          "updatedAt": "2025-05-23T19:32:36.699Z"
         }
       },
       "error": null
@@ -262,14 +501,14 @@
         "status": "success",
         "message": "Staff member created successfully",
         "data": {
-          "id": "c23f5e5e-1a1d-4016-8af1-a8b3d29b202d",
+          "id": "4d2b3666-d1d4-4dfd-ab83-9a13a7c71dec",
           "name": "Test Staff Member",
-          "email": "staff1748026599184@example.com",
+          "email": "staff1748028756705@example.com",
           "phone": "555-789-0123",
           "role": "staff",
           "position": "Event Coordinator",
-          "updatedAt": "2025-05-23T18:56:39.186Z",
-          "createdAt": "2025-05-23T18:56:39.186Z",
+          "updatedAt": "2025-05-23T19:32:36.707Z",
+          "createdAt": "2025-05-23T19:32:36.707Z",
           "company": null,
           "notes": null
         }
@@ -278,46 +517,46 @@
     },
     {
       "name": "Get Staff Details",
-      "endpoint": "GET /v1/staff/c23f5e5e-1a1d-4016-8af1-a8b3d29b202d",
+      "endpoint": "GET /v1/staff/4d2b3666-d1d4-4dfd-ab83-9a13a7c71dec",
       "status": 200,
       "success": true,
       "data": {
         "status": "success",
         "message": "Staff member retrieved successfully",
         "data": {
-          "id": "c23f5e5e-1a1d-4016-8af1-a8b3d29b202d",
+          "id": "4d2b3666-d1d4-4dfd-ab83-9a13a7c71dec",
           "name": "Test Staff Member",
-          "email": "staff1748026599184@example.com",
+          "email": "staff1748028756705@example.com",
           "role": "staff",
           "phone": "555-789-0123",
           "company": null,
           "position": "Event Coordinator",
           "notes": null,
-          "createdAt": "2025-05-23T18:56:39.186Z",
-          "updatedAt": "2025-05-23T18:56:39.186Z"
+          "createdAt": "2025-05-23T19:32:36.707Z",
+          "updatedAt": "2025-05-23T19:32:36.707Z"
         }
       },
       "error": null
     },
     {
       "name": "Update Staff",
-      "endpoint": "PUT /v1/staff/c23f5e5e-1a1d-4016-8af1-a8b3d29b202d",
+      "endpoint": "PUT /v1/staff/4d2b3666-d1d4-4dfd-ab83-9a13a7c71dec",
       "status": 200,
       "success": true,
       "data": {
         "status": "success",
         "message": "Staff member updated successfully",
         "data": {
-          "id": "c23f5e5e-1a1d-4016-8af1-a8b3d29b202d",
+          "id": "4d2b3666-d1d4-4dfd-ab83-9a13a7c71dec",
           "name": "Updated Staff Name",
-          "email": "staff1748026599184@example.com",
+          "email": "staff1748028756705@example.com",
           "role": "staff",
           "phone": "555-789-0123",
           "company": null,
           "position": "Senior Event Coordinator",
           "notes": "Updated via test automation",
-          "createdAt": "2025-05-23T18:56:39.186Z",
-          "updatedAt": "2025-05-23T18:56:39.248Z"
+          "createdAt": "2025-05-23T19:32:36.707Z",
+          "updatedAt": "2025-05-23T19:32:36.768Z"
         }
       },
       "error": null
@@ -331,19 +570,19 @@
         "status": "success",
         "message": "Staff assigned to event successfully",
         "data": {
-          "id": "9dee6d91-8b1e-4272-95e7-af7be3de0d02",
-          "staffId": "c23f5e5e-1a1d-4016-8af1-a8b3d29b202d",
-          "eventId": "a54736b5-88d7-4835-8b46-086a8796a330",
+          "id": "045efd6b-6ba1-41eb-81ae-586865a4c0f5",
+          "staffId": "4d2b3666-d1d4-4dfd-ab83-9a13a7c71dec",
+          "eventId": "9c434aa6-3d47-46ed-bca5-0d6c0772e853",
           "role": "Event Manager",
-          "updatedAt": "2025-05-23T18:56:39.255Z",
-          "createdAt": "2025-05-23T18:56:39.255Z"
+          "updatedAt": "2025-05-23T19:32:36.773Z",
+          "createdAt": "2025-05-23T19:32:36.773Z"
         }
       },
       "error": null
     },
     {
       "name": "Get Staff Schedule",
-      "endpoint": "GET /v1/staff/c23f5e5e-1a1d-4016-8af1-a8b3d29b202d/schedule",
+      "endpoint": "GET /v1/staff/4d2b3666-d1d4-4dfd-ab83-9a13a7c71dec/schedule",
       "status": 200,
       "success": true,
       "data": {
@@ -351,14 +590,14 @@
         "message": "Staff schedule retrieved successfully",
         "data": [
           {
-            "id": "9dee6d91-8b1e-4272-95e7-af7be3de0d02",
-            "staffId": "c23f5e5e-1a1d-4016-8af1-a8b3d29b202d",
-            "eventId": "a54736b5-88d7-4835-8b46-086a8796a330",
+            "id": "045efd6b-6ba1-41eb-81ae-586865a4c0f5",
+            "staffId": "4d2b3666-d1d4-4dfd-ab83-9a13a7c71dec",
+            "eventId": "9c434aa6-3d47-46ed-bca5-0d6c0772e853",
             "role": "Event Manager",
-            "createdAt": "2025-05-23T18:56:39.255Z",
-            "updatedAt": "2025-05-23T18:56:39.255Z",
+            "createdAt": "2025-05-23T19:32:36.773Z",
+            "updatedAt": "2025-05-23T19:32:36.773Z",
             "Event": {
-              "id": "a54736b5-88d7-4835-8b46-086a8796a330",
+              "id": "9c434aa6-3d47-46ed-bca5-0d6c0772e853",
               "name": "Updated Event Name",
               "date": "2025-08-01T18:00:00.000Z",
               "endDate": "2025-08-01T23:00:00.000Z",
@@ -372,7 +611,7 @@
     },
     {
       "name": "Unassign Staff",
-      "endpoint": "DELETE /v1/staff/assignments/9dee6d91-8b1e-4272-95e7-af7be3de0d02",
+      "endpoint": "DELETE /v1/staff/assignments/045efd6b-6ba1-41eb-81ae-586865a4c0f5",
       "status": 200,
       "success": true,
       "data": {
@@ -403,15 +642,15 @@
         "status": "success",
         "message": "Inventory item created successfully",
         "data": {
-          "id": "80765a17-ca93-4ccf-8461-863364f0224f",
+          "id": "c51fb66d-f7a6-452f-b1fb-6c3066adaf01",
           "name": "Test Inventory Item",
           "category": "Test Category",
           "quantity": 25,
           "available": 25,
           "unitCost": "19.99",
           "description": "Created via test automation",
-          "updatedAt": "2025-05-23T18:56:39.271Z",
-          "createdAt": "2025-05-23T18:56:39.271Z",
+          "updatedAt": "2025-05-23T19:32:36.790Z",
+          "createdAt": "2025-05-23T19:32:36.790Z",
           "image": null
         }
       },
@@ -419,14 +658,14 @@
     },
     {
       "name": "Get Inventory Item",
-      "endpoint": "GET /v1/inventory/80765a17-ca93-4ccf-8461-863364f0224f",
+      "endpoint": "GET /v1/inventory/c51fb66d-f7a6-452f-b1fb-6c3066adaf01",
       "status": 200,
       "success": true,
       "data": {
         "status": "success",
         "message": "Inventory item retrieved successfully",
         "data": {
-          "id": "80765a17-ca93-4ccf-8461-863364f0224f",
+          "id": "c51fb66d-f7a6-452f-b1fb-6c3066adaf01",
           "name": "Test Inventory Item",
           "category": "Test Category",
           "quantity": 25,
@@ -434,22 +673,22 @@
           "description": "Created via test automation",
           "unitCost": "19.99",
           "image": null,
-          "createdAt": "2025-05-23T18:56:39.271Z",
-          "updatedAt": "2025-05-23T18:56:39.271Z"
+          "createdAt": "2025-05-23T19:32:36.790Z",
+          "updatedAt": "2025-05-23T19:32:36.790Z"
         }
       },
       "error": null
     },
     {
       "name": "Update Inventory Item",
-      "endpoint": "PUT /v1/inventory/80765a17-ca93-4ccf-8461-863364f0224f",
+      "endpoint": "PUT /v1/inventory/c51fb66d-f7a6-452f-b1fb-6c3066adaf01",
       "status": 200,
       "success": true,
       "data": {
         "status": "success",
         "message": "Inventory item updated successfully",
         "data": {
-          "id": "80765a17-ca93-4ccf-8461-863364f0224f",
+          "id": "c51fb66d-f7a6-452f-b1fb-6c3066adaf01",
           "name": "Updated Inventory Item",
           "category": "Test Category",
           "quantity": 25,
@@ -457,8 +696,8 @@
           "description": "Updated via test automation",
           "unitCost": 29.99,
           "image": null,
-          "createdAt": "2025-05-23T18:56:39.271Z",
-          "updatedAt": "2025-05-23T18:56:39.278Z"
+          "createdAt": "2025-05-23T19:32:36.790Z",
+          "updatedAt": "2025-05-23T19:32:36.797Z"
         }
       },
       "error": null
@@ -472,7 +711,7 @@
         "status": "success",
         "message": "Inventory updated successfully",
         "data": {
-          "id": "80765a17-ca93-4ccf-8461-863364f0224f",
+          "id": "c51fb66d-f7a6-452f-b1fb-6c3066adaf01",
           "name": "Updated Inventory Item",
           "category": "Test Category",
           "quantity": 35,
@@ -480,8 +719,8 @@
           "description": "Updated via test automation",
           "unitCost": "29.99",
           "image": null,
-          "createdAt": "2025-05-23T18:56:39.271Z",
-          "updatedAt": "2025-05-23T18:56:39.283Z"
+          "createdAt": "2025-05-23T19:32:36.790Z",
+          "updatedAt": "2025-05-23T19:32:36.801Z"
         }
       },
       "error": null
@@ -515,7 +754,7 @@
           },
           "items": [
             {
-              "id": "80765a17-ca93-4ccf-8461-863364f0224f",
+              "id": "c51fb66d-f7a6-452f-b1fb-6c3066adaf01",
               "name": "Updated Inventory Item",
               "category": "Test Category",
               "quantity": 35,
@@ -523,8 +762,8 @@
               "description": "Updated via test automation",
               "unitCost": "29.99",
               "image": null,
-              "createdAt": "2025-05-23T18:56:39.271Z",
-              "updatedAt": "2025-05-23T18:56:39.283Z"
+              "createdAt": "2025-05-23T19:32:36.790Z",
+              "updatedAt": "2025-05-23T19:32:36.801Z"
             }
           ]
         }
@@ -534,17 +773,140 @@
     {
       "name": "List Quotes",
       "endpoint": "GET /v1/quotes",
-      "status": 500,
+      "status": 200,
+      "success": true,
+      "data": {
+        "status": "success",
+        "message": "Quotes retrieved successfully",
+        "data": [
+          {
+            "id": "cea86dc2-3be4-4e0b-ae82-d3aed32ca3b6",
+            "clientId": "bbb29a12-8e80-47c6-bd68-6b379f4fea96",
+            "eventId": "8ba63a4c-696b-4226-8334-b74f34a09ca1",
+            "name": "Test Quote",
+            "status": "pending",
+            "notes": "Created via test automation",
+            "approvedAt": null,
+            "createdAt": "2025-05-23T19:23:51.758Z",
+            "updatedAt": "2025-05-23T19:23:51.758Z",
+            "quoteClient": {
+              "id": "bbb29a12-8e80-47c6-bd68-6b379f4fea96",
+              "name": "Updated Client Name",
+              "email": "client1748028226198@example.com"
+            },
+            "event": {
+              "id": "8ba63a4c-696b-4226-8334-b74f34a09ca1",
+              "name": "Updated Event Name",
+              "date": "2025-08-01T18:00:00.000Z"
+            },
+            "quoteItems": []
+          },
+          {
+            "id": "773c6204-59a4-4597-8459-e0fce1458723",
+            "clientId": "96a9016d-ab2a-4d6d-afbf-86d840a1d2c7",
+            "eventId": "7650b44f-b5e9-40c2-8472-c3666b503162",
+            "name": "Test Quote",
+            "status": "pending",
+            "notes": "Created via test automation",
+            "approvedAt": null,
+            "createdAt": "2025-05-23T19:01:47.448Z",
+            "updatedAt": "2025-05-23T19:01:47.448Z",
+            "quoteClient": {
+              "id": "96a9016d-ab2a-4d6d-afbf-86d840a1d2c7",
+              "name": "Updated Client Name",
+              "email": "client1748026797595@example.com"
+            },
+            "event": {
+              "id": "7650b44f-b5e9-40c2-8472-c3666b503162",
+              "name": "Updated Event Name",
+              "date": "2025-08-01T18:00:00.000Z"
+            },
+            "quoteItems": []
+          },
+          {
+            "id": "22dcd1f4-a701-4a7a-b8ff-997ced79defa",
+            "clientId": "adfbb110-2a9c-473d-b2ee-df4c111c29af",
+            "eventId": "581a5ead-33fa-45de-8e07-3baeafdf42a7",
+            "name": "Test Automation Quote",
+            "status": "pending",
+            "notes": "Updated via test automation",
+            "approvedAt": null,
+            "createdAt": "2025-05-23T19:29:44.156Z",
+            "updatedAt": "2025-05-23T19:29:44.168Z",
+            "quoteClient": {
+              "id": "adfbb110-2a9c-473d-b2ee-df4c111c29af",
+              "name": "Test Admin",
+              "email": "testadmin1748028583819@example.com"
+            },
+            "event": {
+              "id": "581a5ead-33fa-45de-8e07-3baeafdf42a7",
+              "name": "Updated Event Name",
+              "date": "2025-08-01T18:00:00.000Z"
+            },
+            "quoteItems": []
+          },
+          {
+            "id": "369b2ec6-e118-43c9-b83a-bbee33c4f2cf",
+            "clientId": "40733803-0490-4708-a485-5fe756d452b8",
+            "eventId": "8db9022d-893a-4460-af4d-b61f4be48e8a",
+            "name": "Test Quote",
+            "status": "pending",
+            "notes": "Updated via test automation",
+            "approvedAt": null,
+            "createdAt": "2025-05-23T19:32:18.874Z",
+            "updatedAt": "2025-05-23T19:32:18.887Z",
+            "quoteClient": {
+              "id": "40733803-0490-4708-a485-5fe756d452b8",
+              "name": "Updated Client Name",
+              "email": "client1748028721716@example.com"
+            },
+            "event": {
+              "id": "8db9022d-893a-4460-af4d-b61f4be48e8a",
+              "name": "Updated Event Name",
+              "date": "2025-08-01T18:00:00.000Z"
+            },
+            "quoteItems": []
+          },
+          {
+            "id": "9bb94747-1880-4eee-968e-06d4c9452652",
+            "clientId": "3058c4a1-61a1-4330-9b4a-08a729a483b1",
+            "eventId": "c5198adf-05c6-408a-94b7-6fd0d0fb8bde",
+            "name": "Test Quote",
+            "status": "pending",
+            "notes": "Created via test automation",
+            "approvedAt": null,
+            "createdAt": "2025-05-23T19:23:55.883Z",
+            "updatedAt": "2025-05-23T19:23:55.883Z",
+            "quoteClient": {
+              "id": "3058c4a1-61a1-4330-9b4a-08a729a483b1",
+              "name": "Updated Client Name",
+              "email": "client1748028231575@example.com"
+            },
+            "event": {
+              "id": "c5198adf-05c6-408a-94b7-6fd0d0fb8bde",
+              "name": "Updated Event Name",
+              "date": "2025-08-01T18:00:00.000Z"
+            },
+            "quoteItems": []
+          }
+        ]
+      },
+      "error": null
+    },
+    {
+      "name": "Create Quote",
+      "endpoint": "POST /v1/quotes",
+      "status": 400,
       "success": false,
       "data": {
         "status": "error",
-        "message": "Error retrieving quotes",
+        "message": "Invalid quote items data",
         "data": null,
         "errors": [
-          "Quote.findAll is not a function"
+          "All quote items must include inventoryId, quantity, unitPrice, and total"
         ]
       },
-      "error": "Request failed with status code 500"
+      "error": "Request failed with status code 400"
     },
     {
       "name": "List Notifications",
@@ -567,12 +929,12 @@
         "status": "success",
         "message": "Device registered successfully",
         "data": {
-          "id": "3280cc59-aef2-4961-b678-15d75c48965b",
-          "userId": "1c69dc93-e7cd-4982-83a0-7584d2911dde",
-          "deviceToken": "test-token-1748026599296",
+          "id": "f805bf5b-3524-4ced-9294-8e3bda319be4",
+          "userId": "3e5fb6d7-0b79-450c-83d6-d893e9f86da4",
+          "deviceToken": "test-token-1748028756813",
           "platform": "web",
-          "updatedAt": "2025-05-23T18:56:39.300Z",
-          "createdAt": "2025-05-23T18:56:39.300Z"
+          "updatedAt": "2025-05-23T19:32:36.816Z",
+          "createdAt": "2025-05-23T19:32:36.816Z"
         }
       },
       "error": null
@@ -586,36 +948,42 @@
         "status": "success",
         "message": "Notification created successfully",
         "data": {
-          "id": "b6c43121-869c-4115-b916-0a9bf879424b",
-          "userId": "1c69dc93-e7cd-4982-83a0-7584d2911dde",
+          "id": "2fd4b049-fa83-45d8-bd61-eddfe88ffb1f",
+          "userId": "3e5fb6d7-0b79-450c-83d6-d893e9f86da4",
           "title": "Test Notification",
           "message": "This is a test notification created via test automation",
           "type": "system",
           "read": false,
-          "updatedAt": "2025-05-23T18:56:39.304Z",
-          "createdAt": "2025-05-23T18:56:39.304Z"
+          "updatedAt": "2025-05-23T19:32:36.820Z",
+          "createdAt": "2025-05-23T19:32:36.820Z"
         }
       },
       "error": null
     },
     {
       "name": "Mark Notification as Read",
-      "endpoint": "PUT /v1/notifications/b6c43121-869c-4115-b916-0a9bf879424b/read",
-      "status": 500,
-      "success": false,
+      "endpoint": "PUT /v1/notifications/2fd4b049-fa83-45d8-bd61-eddfe88ffb1f/read",
+      "status": 200,
+      "success": true,
       "data": {
-        "status": "error",
-        "message": "Internal server error",
-        "data": null,
-        "errors": [
-          "Unexpected token n in JSON at position 0"
-        ]
+        "status": "success",
+        "message": "Notification marked as read",
+        "data": {
+          "id": "2fd4b049-fa83-45d8-bd61-eddfe88ffb1f",
+          "userId": "3e5fb6d7-0b79-450c-83d6-d893e9f86da4",
+          "title": "Test Notification",
+          "message": "This is a test notification created via test automation",
+          "read": true,
+          "type": "system",
+          "createdAt": "2025-05-23T19:32:36.820Z",
+          "updatedAt": "2025-05-23T19:32:36.824Z"
+        }
       },
-      "error": "Request failed with status code 500"
+      "error": null
     },
     {
       "name": "Delete Notification",
-      "endpoint": "DELETE /v1/notifications/b6c43121-869c-4115-b916-0a9bf879424b",
+      "endpoint": "DELETE /v1/notifications/2fd4b049-fa83-45d8-bd61-eddfe88ffb1f",
       "status": 200,
       "success": true,
       "data": {
@@ -627,7 +995,7 @@
     },
     {
       "name": "Delete Inventory Item",
-      "endpoint": "DELETE /v1/inventory/80765a17-ca93-4ccf-8461-863364f0224f",
+      "endpoint": "DELETE /v1/inventory/c51fb66d-f7a6-452f-b1fb-6c3066adaf01",
       "status": 200,
       "success": true,
       "data": {
@@ -639,7 +1007,7 @@
     },
     {
       "name": "Delete Event",
-      "endpoint": "DELETE /v1/events/a54736b5-88d7-4835-8b46-086a8796a330",
+      "endpoint": "DELETE /v1/events/9c434aa6-3d47-46ed-bca5-0d6c0772e853",
       "status": 200,
       "success": true,
       "data": {
@@ -651,7 +1019,7 @@
     },
     {
       "name": "Delete Staff",
-      "endpoint": "DELETE /v1/staff/c23f5e5e-1a1d-4016-8af1-a8b3d29b202d",
+      "endpoint": "DELETE /v1/staff/4d2b3666-d1d4-4dfd-ab83-9a13a7c71dec",
       "status": 200,
       "success": true,
       "data": {
@@ -663,7 +1031,7 @@
     },
     {
       "name": "Delete Client",
-      "endpoint": "DELETE /v1/clients/f1d05727-20d5-44f0-a897-b8f769ee728e",
+      "endpoint": "DELETE /v1/clients/a049ca66-7b22-4405-b853-6de063e9ea29",
       "status": 200,
       "success": true,
       "data": {
@@ -675,8 +1043,8 @@
     }
   ],
   "summary": {
-    "total": 33,
-    "passed": 29,
-    "failed": 4
+    "total": 37,
+    "passed": 36,
+    "failed": 1
   }
 }

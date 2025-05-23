@@ -245,6 +245,7 @@ async function runTests() {
         name: 'Test Quote', 
         items: [
           {
+            
             description: 'Venue Rental',
             quantity: 1,
             unitPrice: 1500.00
@@ -343,8 +344,19 @@ async function runTests() {
       }
       
       if (notificationId) {
-        await runner.runTest('Mark Notification as Read', 'PUT', `/v1/notifications/${notificationId}/read`);
+        // Remove the first problematic call
+        // await runner.runTest('Mark Notification as Read', 'PUT', `/v1/notifications/${notificationId}/read`);
         
+        // Instead, use this properly formatted request with empty JSON object
+        await runner.runTest('Mark Notification as Read', 'PUT', `/v1/notifications/${notificationId}/read`, {});
+        
+        // Remove this duplicate call that's causing additional issues
+        // await axios.put(`${baseUrl}/v1/notifications/${notificationId}/read`, {}, {
+        //   headers: {
+        //     Authorization: `Bearer ${authToken}`
+        //   }
+        // });
+
         await runner.runTest('Delete Notification', 'DELETE', `/v1/notifications/${notificationId}`);
       }
     }

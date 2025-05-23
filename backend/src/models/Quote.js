@@ -1,6 +1,7 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/database').sequelize;
 
+
 // Main Quote model
 const Quote = sequelize.define('Quote', {
   id: {
