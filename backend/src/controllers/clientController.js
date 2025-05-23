@@ -1,4 +1,5 @@
 const User = require('../models/User');
+const { sequelize } = require('../config/database');
 const Event = require('../models/Event');
 
 // Get all clients

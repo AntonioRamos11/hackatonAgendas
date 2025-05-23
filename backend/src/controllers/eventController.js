@@ -1,4 +1,9 @@
+const { sequelize } = require('../config/database');
 const Event = require('../models/Event');
+const { Quote, QuoteItem, QuoteService } = require('../models/Quote');
+const StaffAssignment = require('../models/StaffAssignment');
+const { Invoice, Payment } = require('../models/Invoice');
+const { withTransaction } = require('../utils/dbHelpers');
 const User = require('../models/User');
 const { Op } = require('sequelize');
 
@@ -187,23 +192,80 @@ exports.getEventTimeline = async (req, res) => {
   }
 };
 
-// Add this method to your controller:
-
+// Update the delete method
 exports.deleteEvent = async (req, res) => {
   try {
     const eventId = req.params.id;
-    const event = await Event.findByPk(eventId);
     
-    if (!event) {
-      return res.status(404).json({
-        status: 'error',
-        message: 'Event not found',
-        data: null,
-        errors: ['Event does not exist']
+    await withTransaction(async (transaction) => {
+      // Find all quotes related to this event
+      const quotes = await Quote.findAll({
+        where: { eventId },
+        attributes: ['id'],
+        transaction
       });
-    }
-    
-    await event.destroy();
+      
+      const quoteIds = quotes.map(quote => quote.id);
+      
+      // Delete related invoice payments
+      if (quoteIds.length > 0) {
+        const invoices = await Invoice.findAll({
+          where: { quoteId: quoteIds },
+          attributes: ['id'],
+          transaction
+        });
+        
+        const invoiceIds = invoices.map(invoice => invoice.id);
+        
+        if (invoiceIds.length > 0) {
+          await Payment.destroy({
+            where: { invoiceId: invoiceIds },
+            transaction
+          });
+          
+          // Delete invoices
+          await Invoice.destroy({
+            where: { quoteId: quoteIds },
+            transaction
+          });
+        }
+      }
+      
+      // Delete quote items and services
+      if (quoteIds.length > 0) {
+        await QuoteItem.destroy({
+          where: { quoteId: quoteIds },
+          transaction
+        });
+        
+        await QuoteService.destroy({
+          where: { quoteId: quoteIds },
+          transaction
+        });
+        
+        // Delete quotes
+        await Quote.destroy({
+          where: { eventId },
+          transaction
+        });
+      }
+      
+      // Delete staff assignments
+      await StaffAssignment.destroy({
+        where: { eventId },
+        transaction
+      });
+      
+      // Delete the event
+      const deleted = await Event.destroy({
+        where: { id: eventId },
+        transaction
+      });
+      
+      if (deleted === 0) {
+        throw new Error('Event not found');
+      }
+    });
     
     res.status(200).json({
       status: 'success',
@@ -211,7 +273,8 @@ exports.deleteEvent = async (req, res) => {
       data: null
     });
   } catch (error) {
-    res.status(500).json({
+    console.error('Error deleting event:', error);
+    res.status(error.message === 'Event not found' ? 404 : 500).json({
       status: 'error',
       message: 'Error deleting event',
       data: null,

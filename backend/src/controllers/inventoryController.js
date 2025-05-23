@@ -1,6 +1,8 @@
 const { sequelize } = require('../config/database');
 const Inventory = require('../models/Inventory');
 const { Op } = require('sequelize');
+const { QuoteItem } = require('../models/Quote');
+const { withTransaction } = require('../utils/dbHelpers');
 
 // Get all inventory items
 exports.getInventory = async (req, res) => {
@@ -235,28 +237,91 @@ exports.updateInventoryItem = async (req, res) => {
 // Delete inventory item
 exports.deleteInventoryItem = async (req, res) => {
   try {
-    const inventory = await Inventory.findByPk(req.params.id);
+    const inventoryId = req.params.id;
     
-    if (!inventory) {
-      return res.status(404).json({
-        status: 'error',
-        message: 'Inventory item not found',
-        data: null,
-        errors: ['Item does not exist']
+    // Start a transaction to ensure data consistency
+    const transaction = await sequelize.transaction();
+    
+    try {
+      // First delete related quote items
+      await QuoteItem.destroy({
+        where: { inventoryId },
+        transaction
       });
+      
+      // Then delete the inventory item
+      const deleted = await Inventory.destroy({
+        where: { id: inventoryId },
+        transaction
+      });
+      
+      if (deleted === 0) {
+        await transaction.rollback();
+        return res.status(404).json({
+          status: 'error',
+          message: 'Inventory item not found',
+          data: null,
+          errors: ['Item does not exist']
+        });
+      }
+      
+      // If everything succeeded, commit the transaction
+      await transaction.commit();
+      
+      res.status(200).json({
+        status: 'success',
+        message: 'Inventory item deleted successfully',
+        data: null
+      });
+    } catch (err) {
+      // If anything fails, rollback the transaction
+      await transaction.rollback();
+      throw err;
     }
-    
-    await inventory.destroy();
-    
-    res.status(200).json({
-      status: 'success',
-      message: 'Inventory item deleted successfully',
-      data: null
-    });
   } catch (error) {
+    console.error('Error deleting inventory item:', error);
     res.status(500).json({
       status: 'error',
       message: 'Error deleting inventory item',
+      data: null,
+      errors: [error.message]
+    });
+  }
+};
+
+// Update the delete method
+exports.deleteInventory = async (req, res) => {
+  try {
+    const inventoryId = req.params.id;
+    
+    await withTransaction(async (transaction) => {
+      // First delete related quote items
+      await QuoteItem.destroy({
+        where: { inventoryId },
+        transaction
+      });
+      
+      // Then delete the inventory item
+      const deleted = await Inventory.destroy({
+        where: { id: inventoryId },
+        transaction
+      });
+      
+      if (deleted === 0) {
+        throw new Error('Inventory item not found');
+      }
+    });
+    
+    res.status(200).json({
+      status: 'success',
+      message: 'Inventory deleted successfully',
+      data: null
+    });
+  } catch (error) {
+    console.error('Error deleting inventory:', error);
+    res.status(error.message === 'Inventory item not found' ? 404 : 500).json({
+      status: 'error',
+      message: 'Error deleting inventory',
       data: null,
       errors: [error.message]
     });
