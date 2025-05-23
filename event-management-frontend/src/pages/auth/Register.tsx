@@ -20,7 +20,8 @@ const Register = () => {
                 password,
                 role,
             });
-            localStorage.setItem('token', response.data.token);
+            localStorage.setItem('token', response.data.data.token);
+            console.log('Token guardado:', localStorage.getItem('token')); // Debug
             history.push('/dashboard'); // Redirect after successful registration
         } catch (err: any) {
             setError(

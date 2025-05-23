@@ -20,7 +20,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
 
         try {
             const response = await login(email, password);
-            localStorage.setItem('token', response.data.token);
+            localStorage.setItem('token', response.data.data.token);
             history.push('/dashboard');
         } catch (err) {
             setError('Invalid email or password');
