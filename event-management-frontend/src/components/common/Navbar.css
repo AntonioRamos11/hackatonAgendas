@@ -1,0 +1,76 @@
+.navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: linear-gradient(to right, #2c3e50, #4a69bd);
+    padding: 0.8rem 2rem;
+    color: #fff;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.navbar-brand a {
+    color: #fff;
+    font-weight: bold;
+    font-size: 1.5rem;
+    text-decoration: none;
+    letter-spacing: 0.5px;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.navbar-menu,
+.navbar-auth {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.navbar-menu li,
+.navbar-auth li {
+    margin-left: 1.8rem;
+    position: relative;
+}
+
+.navbar-menu a,
+.navbar-auth-link {
+    color: #eee;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    font-weight: 500;
+    padding: 0.5rem 0;
+    position: relative;
+}
+
+.navbar-menu a::after,
+.navbar-auth-link::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: #4fd1c5;
+    transition: width 0.3s ease;
+}
+
+.navbar-menu a:hover,
+.navbar-auth-link:hover {
+    color: #4fd1c5;
+}
+
+.navbar-menu a:hover::after,
+.navbar-auth-link:hover::after {
+    width: 100%;
+}
+
+.navbar-auth-link {
+    background-color: rgba(255, 255, 255, 0.1);
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.navbar-auth-link:hover {
+    background-color: rgba(79, 209, 197, 0.2);
+    border-color: #4fd1c5;
+}
