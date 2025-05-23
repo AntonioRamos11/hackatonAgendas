@@ -6,6 +6,12 @@ interface TableProps {
 }
 
 const Table: React.FC<TableProps> = ({ headers, data }) => {
+  // Add safety check for data
+  if (!data || !Array.isArray(data)) {
+    console.error('Table component received invalid data:', data);
+    return <div>No data available</div>;
+  }
+
   return (
     <table>
       <thead>
