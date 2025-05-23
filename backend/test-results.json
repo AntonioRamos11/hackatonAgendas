@@ -1,0 +1,682 @@
+{
+  "timestamp": "2025-05-23T18:56:39.326Z",
+  "baseUrl": "http://localhost:5000/api",
+  "tests": [
+    {
+      "name": "Get Profile",
+      "endpoint": "GET /v1/auth/me",
+      "status": 200,
+      "success": true,
+      "data": {
+        "status": "success",
+        "message": "User profile retrieved",
+        "data": {
+          "id": "1c69dc93-e7cd-4982-83a0-7584d2911dde",
+          "name": "Test Admin",
+          "email": "testadmin1748026598943@example.com",
+          "role": "admin",
+          "phone": null,
+          "company": null,
+          "position": null,
+          "notes": null,
+          "createdAt": "2025-05-23T18:56:38.948Z",
+          "updatedAt": "2025-05-23T18:56:38.948Z"
+        }
+      },
+      "error": null
+    },
+    {
+      "name": "List Events",
+      "endpoint": "GET /v1/events",
+      "status": 200,
+      "success": true,
+      "data": {
+        "status": "success",
+        "message": "Events retrieved successfully",
+        "data": [],
+        "pagination": {
+          "total": 0,
+          "page": 1,
+          "per_page": 0,
+          "total_pages": 1
+        }
+      },
+      "error": null
+    },
+    {
+      "name": "Create Event",
+      "endpoint": "POST /v1/events",
+      "status": 201,
+      "success": true,
+      "data": {
+        "status": "success",
+        "message": "Event created successfully",
+        "data": {
+          "id": "a54736b5-88d7-4835-8b46-086a8796a330",
+          "status": "pending",
+          "name": "Test Automation Event",
+          "date": "2025-08-01T18:00:00.000Z",
+          "endDate": "2025-08-01T23:00:00.000Z",
+          "location": "Test Venue",
+          "clientId": "1c69dc93-e7cd-4982-83a0-7584d2911dde",
+          "updatedAt": "2025-05-23T18:56:39.089Z",
+          "createdAt": "2025-05-23T18:56:39.089Z",
+          "description": null,
+          "guestCount": null,
+          "budget": null,
+          "specialRequirements": null
+        }
+      },
+      "error": null
+    },
+    {
+      "name": "Get Event Details",
+      "endpoint": "GET /v1/events/a54736b5-88d7-4835-8b46-086a8796a330",
+      "status": 500,
+      "success": false,
+      "data": {
+        "status": "error",
+        "message": "Error retrieving event",
+        "data": null,
+        "errors": [
+          "column client.phoneNumber does not exist"
+        ]
+      },
+      "error": "Request failed with status code 500"
+    },
+    {
+      "name": "Update Event",
+      "endpoint": "PUT /v1/events/a54736b5-88d7-4835-8b46-086a8796a330",
+      "status": 200,
+      "success": true,
+      "data": {
+        "status": "success",
+        "message": "Event updated successfully",
+        "data": {
+          "id": "a54736b5-88d7-4835-8b46-086a8796a330",
+          "name": "Updated Event Name",
+          "date": "2025-08-01T18:00:00.000Z",
+          "endDate": "2025-08-01T23:00:00.000Z",
+          "location": "Test Venue",
+          "clientId": "1c69dc93-e7cd-4982-83a0-7584d2911dde",
+          "status": "pending",
+          "description": null,
+          "guestCount": null,
+          "budget": null,
+          "specialRequirements": null,
+          "createdAt": "2025-05-23T18:56:39.089Z",
+          "updatedAt": "2025-05-23T18:56:39.107Z"
+        }
+      },
+      "error": null
+    },
+    {
+      "name": "Get Event Timeline",
+      "endpoint": "GET /v1/events/a54736b5-88d7-4835-8b46-086a8796a330/timeline",
+      "status": 200,
+      "success": true,
+      "data": {
+        "status": "success",
+        "message": "Event timeline retrieved successfully",
+        "data": {
+          "event_id": "a54736b5-88d7-4835-8b46-086a8796a330",
+          "name": "Updated Event Name",
+          "date": "2025-08-01T18:00:00.000Z",
+          "timeline": []
+        }
+      },
+      "error": null
+    },
+    {
+      "name": "Update Event Status",
+      "endpoint": "POST /v1/events/a54736b5-88d7-4835-8b46-086a8796a330/status",
+      "status": 200,
+      "success": true,
+      "data": {
+        "status": "success",
+        "message": "Event status updated successfully",
+        "data": {
+          "id": "a54736b5-88d7-4835-8b46-086a8796a330",
+          "name": "Updated Event Name",
+          "date": "2025-08-01T18:00:00.000Z",
+          "endDate": "2025-08-01T23:00:00.000Z",
+          "location": "Test Venue",
+          "clientId": "1c69dc93-e7cd-4982-83a0-7584d2911dde",
+          "status": "confirmed",
+          "description": null,
+          "guestCount": null,
+          "budget": null,
+          "specialRequirements": null,
+          "createdAt": "2025-05-23T18:56:39.089Z",
+          "updatedAt": "2025-05-23T18:56:39.117Z"
+        }
+      },
+      "error": null
+    },
+    {
+      "name": "List Clients",
+      "endpoint": "GET /v1/clients",
+      "status": 500,
+      "success": false,
+      "data": {
+        "status": "error",
+        "message": "Error retrieving clients",
+        "data": null,
+        "errors": [
+          "column \"phoneNumber\" does not exist"
+        ]
+      },
+      "error": "Request failed with status code 500"
+    },
+    {
+      "name": "Create Client",
+      "endpoint": "POST /v1/clients",
+      "status": 201,
+      "success": true,
+      "data": {
+        "status": "success",
+        "message": "Client added successfully",
+        "data": {
+          "id": "f1d05727-20d5-44f0-a897-b8f769ee728e",
+          "name": "Test Client",
+          "email": "client1748026599122@example.com",
+          "phone": "555-123-4567",
+          "company": "Test Company",
+          "password": "$2b$10$lnb1PkuTSkUSREAAQ4sWNeV2JZ5ENTv8.XobB/NV6q9ETmjNg6o6O",
+          "notes": "Created via test automation",
+          "role": "client",
+          "updatedAt": "2025-05-23T18:56:39.124Z",
+          "createdAt": "2025-05-23T18:56:39.124Z",
+          "position": null
+        }
+      },
+      "error": null
+    },
+    {
+      "name": "List Staff",
+      "endpoint": "GET /v1/staff",
+      "status": 200,
+      "success": true,
+      "data": {
+        "status": "success",
+        "message": "Staff members retrieved successfully",
+        "data": [
+          {
+            "id": "b33fb7bd-03e7-406d-a27a-b303772054bd",
+            "name": "Updated Staff Name",
+            "email": "staff1748026168943@example.com",
+            "role": "staff",
+            "phone": "555-789-0123",
+            "company": null,
+            "position": "Senior Event Coordinator",
+            "notes": "Updated via test automation",
+            "createdAt": "2025-05-23T18:49:28.946Z",
+            "updatedAt": "2025-05-23T18:49:29.013Z"
+          },
+          {
+            "id": "20dc4efc-972b-496b-976c-1c30e1f20b09",
+            "name": "Updated Staff Name",
+            "email": "staff1748026183541@example.com",
+            "role": "staff",
+            "phone": "555-789-0123",
+            "company": null,
+            "position": "Senior Event Coordinator",
+            "notes": "Updated via test automation",
+            "createdAt": "2025-05-23T18:49:43.543Z",
+            "updatedAt": "2025-05-23T18:49:43.607Z"
+          },
+          {
+            "id": "c9ccc398-638b-4dac-98c9-0e9b6e31b7c2",
+            "name": "Updated Staff Name",
+            "email": "staff1748026266750@example.com",
+            "role": "staff",
+            "phone": "555-789-0123",
+            "company": null,
+            "position": "Senior Event Coordinator",
+            "notes": "Updated via test automation",
+            "createdAt": "2025-05-23T18:51:06.752Z",
+            "updatedAt": "2025-05-23T18:51:06.816Z"
+          },
+          {
+            "id": "93746c56-cc6e-4129-bb4b-324f8a05e1ef",
+            "name": "Updated Staff Name",
+            "email": "staff1748026413421@example.com",
+            "role": "staff",
+            "phone": "555-789-0123",
+            "company": null,
+            "position": "Senior Event Coordinator",
+            "notes": "Updated via test automation",
+            "createdAt": "2025-05-23T18:53:33.424Z",
+            "updatedAt": "2025-05-23T18:53:33.486Z"
+          }
+        ]
+      },
+      "error": null
+    },
+    {
+      "name": "Create Staff",
+      "endpoint": "POST /v1/staff",
+      "status": 201,
+      "success": true,
+      "data": {
+        "status": "success",
+        "message": "Staff member created successfully",
+        "data": {
+          "id": "c23f5e5e-1a1d-4016-8af1-a8b3d29b202d",
+          "name": "Test Staff Member",
+          "email": "staff1748026599184@example.com",
+          "phone": "555-789-0123",
+          "role": "staff",
+          "position": "Event Coordinator",
+          "updatedAt": "2025-05-23T18:56:39.186Z",
+          "createdAt": "2025-05-23T18:56:39.186Z",
+          "company": null,
+          "notes": null
+        }
+      },
+      "error": null
+    },
+    {
+      "name": "Get Staff Details",
+      "endpoint": "GET /v1/staff/c23f5e5e-1a1d-4016-8af1-a8b3d29b202d",
+      "status": 200,
+      "success": true,
+      "data": {
+        "status": "success",
+        "message": "Staff member retrieved successfully",
+        "data": {
+          "id": "c23f5e5e-1a1d-4016-8af1-a8b3d29b202d",
+          "name": "Test Staff Member",
+          "email": "staff1748026599184@example.com",
+          "role": "staff",
+          "phone": "555-789-0123",
+          "company": null,
+          "position": "Event Coordinator",
+          "notes": null,
+          "createdAt": "2025-05-23T18:56:39.186Z",
+          "updatedAt": "2025-05-23T18:56:39.186Z"
+        }
+      },
+      "error": null
+    },
+    {
+      "name": "Update Staff",
+      "endpoint": "PUT /v1/staff/c23f5e5e-1a1d-4016-8af1-a8b3d29b202d",
+      "status": 200,
+      "success": true,
+      "data": {
+        "status": "success",
+        "message": "Staff member updated successfully",
+        "data": {
+          "id": "c23f5e5e-1a1d-4016-8af1-a8b3d29b202d",
+          "name": "Updated Staff Name",
+          "email": "staff1748026599184@example.com",
+          "role": "staff",
+          "phone": "555-789-0123",
+          "company": null,
+          "position": "Senior Event Coordinator",
+          "notes": "Updated via test automation",
+          "createdAt": "2025-05-23T18:56:39.186Z",
+          "updatedAt": "2025-05-23T18:56:39.248Z"
+        }
+      },
+      "error": null
+    },
+    {
+      "name": "Assign Staff",
+      "endpoint": "POST /v1/staff/assignments",
+      "status": 201,
+      "success": true,
+      "data": {
+        "status": "success",
+        "message": "Staff assigned to event successfully",
+        "data": {
+          "id": "9dee6d91-8b1e-4272-95e7-af7be3de0d02",
+          "staffId": "c23f5e5e-1a1d-4016-8af1-a8b3d29b202d",
+          "eventId": "a54736b5-88d7-4835-8b46-086a8796a330",
+          "role": "Event Manager",
+          "updatedAt": "2025-05-23T18:56:39.255Z",
+          "createdAt": "2025-05-23T18:56:39.255Z"
+        }
+      },
+      "error": null
+    },
+    {
+      "name": "Get Staff Schedule",
+      "endpoint": "GET /v1/staff/c23f5e5e-1a1d-4016-8af1-a8b3d29b202d/schedule",
+      "status": 200,
+      "success": true,
+      "data": {
+        "status": "success",
+        "message": "Staff schedule retrieved successfully",
+        "data": [
+          {
+            "id": "9dee6d91-8b1e-4272-95e7-af7be3de0d02",
+            "staffId": "c23f5e5e-1a1d-4016-8af1-a8b3d29b202d",
+            "eventId": "a54736b5-88d7-4835-8b46-086a8796a330",
+            "role": "Event Manager",
+            "createdAt": "2025-05-23T18:56:39.255Z",
+            "updatedAt": "2025-05-23T18:56:39.255Z",
+            "Event": {
+              "id": "a54736b5-88d7-4835-8b46-086a8796a330",
+              "name": "Updated Event Name",
+              "date": "2025-08-01T18:00:00.000Z",
+              "endDate": "2025-08-01T23:00:00.000Z",
+              "location": "Test Venue",
+              "status": "confirmed"
+            }
+          }
+        ]
+      },
+      "error": null
+    },
+    {
+      "name": "Unassign Staff",
+      "endpoint": "DELETE /v1/staff/assignments/9dee6d91-8b1e-4272-95e7-af7be3de0d02",
+      "status": 200,
+      "success": true,
+      "data": {
+        "status": "success",
+        "message": "Staff unassigned from event successfully",
+        "data": null
+      },
+      "error": null
+    },
+    {
+      "name": "List Inventory",
+      "endpoint": "GET /v1/inventory",
+      "status": 200,
+      "success": true,
+      "data": {
+        "status": "success",
+        "message": "Inventory items retrieved successfully",
+        "data": []
+      },
+      "error": null
+    },
+    {
+      "name": "Create Inventory Item",
+      "endpoint": "POST /v1/inventory",
+      "status": 201,
+      "success": true,
+      "data": {
+        "status": "success",
+        "message": "Inventory item created successfully",
+        "data": {
+          "id": "80765a17-ca93-4ccf-8461-863364f0224f",
+          "name": "Test Inventory Item",
+          "category": "Test Category",
+          "quantity": 25,
+          "available": 25,
+          "unitCost": "19.99",
+          "description": "Created via test automation",
+          "updatedAt": "2025-05-23T18:56:39.271Z",
+          "createdAt": "2025-05-23T18:56:39.271Z",
+          "image": null
+        }
+      },
+      "error": null
+    },
+    {
+      "name": "Get Inventory Item",
+      "endpoint": "GET /v1/inventory/80765a17-ca93-4ccf-8461-863364f0224f",
+      "status": 200,
+      "success": true,
+      "data": {
+        "status": "success",
+        "message": "Inventory item retrieved successfully",
+        "data": {
+          "id": "80765a17-ca93-4ccf-8461-863364f0224f",
+          "name": "Test Inventory Item",
+          "category": "Test Category",
+          "quantity": 25,
+          "available": 25,
+          "description": "Created via test automation",
+          "unitCost": "19.99",
+          "image": null,
+          "createdAt": "2025-05-23T18:56:39.271Z",
+          "updatedAt": "2025-05-23T18:56:39.271Z"
+        }
+      },
+      "error": null
+    },
+    {
+      "name": "Update Inventory Item",
+      "endpoint": "PUT /v1/inventory/80765a17-ca93-4ccf-8461-863364f0224f",
+      "status": 200,
+      "success": true,
+      "data": {
+        "status": "success",
+        "message": "Inventory item updated successfully",
+        "data": {
+          "id": "80765a17-ca93-4ccf-8461-863364f0224f",
+          "name": "Updated Inventory Item",
+          "category": "Test Category",
+          "quantity": 25,
+          "available": 25,
+          "description": "Updated via test automation",
+          "unitCost": 29.99,
+          "image": null,
+          "createdAt": "2025-05-23T18:56:39.271Z",
+          "updatedAt": "2025-05-23T18:56:39.278Z"
+        }
+      },
+      "error": null
+    },
+    {
+      "name": "Update Inventory Quantity",
+      "endpoint": "POST /v1/inventory/update",
+      "status": 200,
+      "success": true,
+      "data": {
+        "status": "success",
+        "message": "Inventory updated successfully",
+        "data": {
+          "id": "80765a17-ca93-4ccf-8461-863364f0224f",
+          "name": "Updated Inventory Item",
+          "category": "Test Category",
+          "quantity": 35,
+          "available": 35,
+          "description": "Updated via test automation",
+          "unitCost": "29.99",
+          "image": null,
+          "createdAt": "2025-05-23T18:56:39.271Z",
+          "updatedAt": "2025-05-23T18:56:39.283Z"
+        }
+      },
+      "error": null
+    },
+    {
+      "name": "Get Inventory Categories",
+      "endpoint": "GET /v1/inventory/categories",
+      "status": 200,
+      "success": true,
+      "data": {
+        "status": "success",
+        "message": "Inventory categories retrieved successfully",
+        "data": [
+          "Test Category"
+        ]
+      },
+      "error": null
+    },
+    {
+      "name": "Check Inventory Availability",
+      "endpoint": "GET /v1/inventory/availability?start_date=2025-08-01&end_date=2025-08-05",
+      "status": 200,
+      "success": true,
+      "data": {
+        "status": "success",
+        "message": "Availability retrieved successfully",
+        "data": {
+          "dateRange": {
+            "start": "2025-08-01",
+            "end": "2025-08-05"
+          },
+          "items": [
+            {
+              "id": "80765a17-ca93-4ccf-8461-863364f0224f",
+              "name": "Updated Inventory Item",
+              "category": "Test Category",
+              "quantity": 35,
+              "available": 35,
+              "description": "Updated via test automation",
+              "unitCost": "29.99",
+              "image": null,
+              "createdAt": "2025-05-23T18:56:39.271Z",
+              "updatedAt": "2025-05-23T18:56:39.283Z"
+            }
+          ]
+        }
+      },
+      "error": null
+    },
+    {
+      "name": "List Quotes",
+      "endpoint": "GET /v1/quotes",
+      "status": 500,
+      "success": false,
+      "data": {
+        "status": "error",
+        "message": "Error retrieving quotes",
+        "data": null,
+        "errors": [
+          "Quote.findAll is not a function"
+        ]
+      },
+      "error": "Request failed with status code 500"
+    },
+    {
+      "name": "List Notifications",
+      "endpoint": "GET /v1/notifications",
+      "status": 200,
+      "success": true,
+      "data": {
+        "status": "success",
+        "message": "Notifications retrieved successfully",
+        "data": []
+      },
+      "error": null
+    },
+    {
+      "name": "Register Device",
+      "endpoint": "POST /v1/notifications/register-device",
+      "status": 200,
+      "success": true,
+      "data": {
+        "status": "success",
+        "message": "Device registered successfully",
+        "data": {
+          "id": "3280cc59-aef2-4961-b678-15d75c48965b",
+          "userId": "1c69dc93-e7cd-4982-83a0-7584d2911dde",
+          "deviceToken": "test-token-1748026599296",
+          "platform": "web",
+          "updatedAt": "2025-05-23T18:56:39.300Z",
+          "createdAt": "2025-05-23T18:56:39.300Z"
+        }
+      },
+      "error": null
+    },
+    {
+      "name": "Create Notification",
+      "endpoint": "POST /v1/notifications",
+      "status": 201,
+      "success": true,
+      "data": {
+        "status": "success",
+        "message": "Notification created successfully",
+        "data": {
+          "id": "b6c43121-869c-4115-b916-0a9bf879424b",
+          "userId": "1c69dc93-e7cd-4982-83a0-7584d2911dde",
+          "title": "Test Notification",
+          "message": "This is a test notification created via test automation",
+          "type": "system",
+          "read": false,
+          "updatedAt": "2025-05-23T18:56:39.304Z",
+          "createdAt": "2025-05-23T18:56:39.304Z"
+        }
+      },
+      "error": null
+    },
+    {
+      "name": "Mark Notification as Read",
+      "endpoint": "PUT /v1/notifications/b6c43121-869c-4115-b916-0a9bf879424b/read",
+      "status": 500,
+      "success": false,
+      "data": {
+        "status": "error",
+        "message": "Internal server error",
+        "data": null,
+        "errors": [
+          "Unexpected token n in JSON at position 0"
+        ]
+      },
+      "error": "Request failed with status code 500"
+    },
+    {
+      "name": "Delete Notification",
+      "endpoint": "DELETE /v1/notifications/b6c43121-869c-4115-b916-0a9bf879424b",
+      "status": 200,
+      "success": true,
+      "data": {
+        "status": "success",
+        "message": "Notification deleted successfully",
+        "data": null
+      },
+      "error": null
+    },
+    {
+      "name": "Delete Inventory Item",
+      "endpoint": "DELETE /v1/inventory/80765a17-ca93-4ccf-8461-863364f0224f",
+      "status": 200,
+      "success": true,
+      "data": {
+        "status": "success",
+        "message": "Inventory item deleted successfully",
+        "data": null
+      },
+      "error": null
+    },
+    {
+      "name": "Delete Event",
+      "endpoint": "DELETE /v1/events/a54736b5-88d7-4835-8b46-086a8796a330",
+      "status": 200,
+      "success": true,
+      "data": {
+        "status": "success",
+        "message": "Event deleted successfully",
+        "data": null
+      },
+      "error": null
+    },
+    {
+      "name": "Delete Staff",
+      "endpoint": "DELETE /v1/staff/c23f5e5e-1a1d-4016-8af1-a8b3d29b202d",
+      "status": 200,
+      "success": true,
+      "data": {
+        "status": "success",
+        "message": "Staff member deleted successfully",
+        "data": null
+      },
+      "error": null
+    },
+    {
+      "name": "Delete Client",
+      "endpoint": "DELETE /v1/clients/f1d05727-20d5-44f0-a897-b8f769ee728e",
+      "status": 200,
+      "success": true,
+      "data": {
+        "status": "success",
+        "message": "Client deleted successfully",
+        "data": null
+      },
+      "error": null
+    }
+  ],
+  "summary": {
+    "total": 33,
+    "passed": 29,
+    "failed": 4
+  }
+}

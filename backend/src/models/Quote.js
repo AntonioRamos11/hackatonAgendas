@@ -1,5 +1,5 @@
 const { DataTypes } = require('sequelize');
-const { sequelize } = require('../config/database');
+const sequelize = require('../config/database').sequelize;
 
 // Main Quote model
 const Quote = sequelize.define('Quote', {
@@ -10,37 +10,34 @@ const Quote = sequelize.define('Quote', {
   },
   clientId: {
     type: DataTypes.UUID,
-    allowNull: false
+    allowNull: false,
+    references: {
+      model: 'Users',
+      key: 'id'
+    }
   },
-  // Event details as columns in the main Quote table
-  eventName: {
+  eventId: {
+    type: DataTypes.UUID,
+    allowNull: false,
+    references: {
+      model: 'Events',
+      key: 'id'
+    }
+  },
+  name: {
     type: DataTypes.STRING,
     allowNull: false
   },
-  eventDate: {
-    type: DataTypes.DATE,
-    allowNull: false
-  },
-  eventLocation: DataTypes.STRING,
-  guestCount: DataTypes.INTEGER,
-  
-  // Financial information
-  subtotal: {
-    type: DataTypes.DECIMAL(10, 2),
-    allowNull: false
-  },
-  tax: DataTypes.DECIMAL(10, 2),
-  total: {
-    type: DataTypes.DECIMAL(10, 2),
-    allowNull: false
-  },
   status: {
-    type: DataTypes.ENUM('draft', 'sent', 'approved', 'rejected'),
-    defaultValue: 'draft'
+    type: DataTypes.ENUM('pending', 'approved', 'rejected'),
+    defaultValue: 'pending'
   },
-  validUntil: DataTypes.DATE,
-  notes: DataTypes.TEXT,
-  approvedAt: DataTypes.DATE
+  notes: {
+    type: DataTypes.TEXT
+  },
+  approvedAt: {
+    type: DataTypes.DATE
+  }
 }, {
   timestamps: true
 });
@@ -100,29 +97,8 @@ const QuoteService = sequelize.define('QuoteService', {
   timestamps: true
 });
 
-// Set up associations
-const setupAssociations = () => {
-  const User = require('./User');
-  const Inventory = require('./Inventory');
-
-  // Quote belongs to User (client)
-  Quote.belongsTo(User, { foreignKey: 'clientId', as: 'client' });
-  
-  // Quote has many QuoteItems
-  Quote.hasMany(QuoteItem, { foreignKey: 'quoteId', as: 'items', onDelete: 'CASCADE' });
-  QuoteItem.belongsTo(Quote, { foreignKey: 'quoteId' });
-  
-  // QuoteItem belongs to Inventory
-  QuoteItem.belongsTo(Inventory, { foreignKey: 'inventoryId', as: 'item' });
-  
-  // Quote has many QuoteServices
-  Quote.hasMany(QuoteService, { foreignKey: 'quoteId', as: 'services', onDelete: 'CASCADE' });
-  QuoteService.belongsTo(Quote, { foreignKey: 'quoteId' });
-};
-
 module.exports = {
   Quote,
   QuoteItem,
-  QuoteService,
-  setupAssociations
+  QuoteService
 };

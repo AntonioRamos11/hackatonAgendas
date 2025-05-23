@@ -10,6 +10,14 @@ const Notification = sequelize.define('Notification', {
   },
   userId: {
     type: DataTypes.UUID,
+    allowNull: false,
+    references: {
+      model: 'Users',
+      key: 'id'
+    }
+  },
+  title: {
+    type: DataTypes.STRING,
     allowNull: false
   },
   message: {
@@ -21,10 +29,9 @@ const Notification = sequelize.define('Notification', {
     defaultValue: false
   },
   type: {
-    type: DataTypes.ENUM('info', 'warning', 'error'),
-    defaultValue: 'info'
-  },
-  link: DataTypes.STRING
+    type: DataTypes.ENUM('system', 'event', 'quote', 'invoice', 'staff'),
+    defaultValue: 'system'
+  }
 }, {
   timestamps: true
 });

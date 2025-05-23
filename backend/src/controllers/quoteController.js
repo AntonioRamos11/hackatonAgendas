@@ -1,87 +1,78 @@
-const { Quote, QuoteItem, QuoteService } = require('../models/Quote');
+const { sequelize } = require('../config/database');
+const Quote = require('../models/Quote');
+const QuoteItem = require('../models/QuoteItem');
 const User = require('../models/User');
+const Event = require('../models/Event');
 const Inventory = require('../models/Inventory');
-const { Event } = require('../models/Event');
 const { Invoice } = require('../models/Invoice');
 
-// Create quote
+// Get all quotes
+exports.getQuotes = async (req, res) => {
+  try {
+    const quotes = await Quote.findAll({
+      include: [
+        {
+          model: User,
+          as: 'client',
+          attributes: ['id', 'name', 'email']
+        },
+        {
+          model: Event,
+          attributes: ['id', 'name', 'date']
+        },
+        {
+          model: QuoteItem,
+          as: 'items'
+        }
+      ]
+    });
+    
+    res.status(200).json({
+      status: 'success',
+      message: 'Quotes retrieved successfully',
+      data: quotes
+    });
+  } catch (error) {
+    res.status(500).json({
+      status: 'error',
+      message: 'Error retrieving quotes',
+      data: null,
+      errors: [error.message]
+    });
+  }
+};
+
+// Create a new quote
 exports.createQuote = async (req, res) => {
   try {
-    const { clientId, eventDetails, items, services } = req.body;
+    const { clientId, eventId, name, items, notes } = req.body;
     
-    // Check if client exists
-    const client = await User.findByPk(clientId);
-    if (!client) {
-      return res.status(404).json({
-        status: 'error',
-        message: 'Client not found',
-        data: null,
-        errors: ['Client does not exist']
-      });
-    }
-    
-    // Calculate subtotal from items and services
-    let subtotal = 0;
-    
-    // Create quote
+    // Create the quote
     const quote = await Quote.create({
       clientId,
-      eventName: eventDetails.name,
-      eventDate: eventDetails.date,
-      eventLocation: eventDetails.location,
-      guestCount: eventDetails.guestCount,
-      subtotal,
-      total: subtotal, // You would add tax calculation here
-      validUntil: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000) // Valid for 30 days
+      eventId,
+      name,
+      status: 'pending',
+      notes
     });
     
-    // Create quote items
+    // Create quote items if provided
     if (items && items.length > 0) {
-      for (const item of items) {
-        const inventoryItem = await Inventory.findByPk(item.inventoryId);
-        if (inventoryItem) {
-          await QuoteItem.create({
-            quoteId: quote.id,
-            inventoryId: item.inventoryId,
-            quantity: item.quantity,
-            unitPrice: inventoryItem.unitCost,
-            total: inventoryItem.unitCost * item.quantity
-          });
-          
-          // Add item total to quote subtotal
-          subtotal += inventoryItem.unitCost * item.quantity;
-        }
-      }
+      const quoteItems = items.map(item => ({
+        ...item,
+        quoteId: quote.id
+      }));
+      
+      await QuoteItem.bulkCreate(quoteItems);
     }
     
-    // Create quote services
-    if (services && services.length > 0) {
-      for (const service of services) {
-        await QuoteService.create({
-          quoteId: quote.id,
-          name: service.name,
-          description: service.description,
-          price: service.price
-        });
-        
-        // Add service price to quote subtotal
-        subtotal += service.price;
-      }
-    }
-    
-    // Update quote with calculated subtotal and total
-    const tax = subtotal * 0.1; // 10% tax for example
-    await quote.update({
-      subtotal,
-      tax,
-      total: subtotal + tax
-    });
-    
-    // Get the quote with all related data
+    // Get the complete quote with items
     const completeQuote = await Quote.findByPk(quote.id, {
       include: [
-        { model: QuoteItem, as: 'items', include: [{ model: Inventory, as: 'item' }] },
-        { model: QuoteService, as: 'services' }
+        {
+          model: QuoteItem,
+          as: 'items'
+        }
       ]
     });
     
@@ -103,11 +94,23 @@ exports.createQuote = async (req, res) => {
 // Get quote by ID
 exports.getQuoteById = async (req, res) => {
   try {
-    const quote = await Quote.findByPk(req.params.id, {
+    const quoteId = req.params.id;
+    
+    const quote = await Quote.findByPk(quoteId, {
       include: [
-        { model: User, as: 'client', attributes: ['id', 'name', 'email'] },
-        { model: QuoteItem, as: 'items', include: [{ model: Inventory, as: 'item' }] },
-        { model: QuoteService, as: 'services' }
+        {
+          model: User,
+          as: 'client',
+          attributes: ['id', 'name', 'email']
+        },
+        {
+          model: Event,
+          attributes: ['id', 'name', 'date']
+        },
+        {
+          model: QuoteItem,
+          as: 'items'
+        }
       ]
     });
     
@@ -135,12 +138,14 @@ exports.getQuoteById = async (req, res) => {
   }
 };
 
-// Approve quote
-exports.approveQuote = async (req, res) => {
+// Update quote
+exports.updateQuote = async (req, res) => {
   try {
     const quoteId = req.params.id;
+    const { name, items, notes, status } = req.body;
     
     const quote = await Quote.findByPk(quoteId);
+    
     if (!quote) {
       return res.status(404).json({
         status: 'error',
@@ -150,45 +155,117 @@ exports.approveQuote = async (req, res) => {
       });
     }
     
-    // Update quote status
-    await quote.update({ 
-      status: 'approved',
-      approvedAt: new Date()
-    });
+    // Update quote fields
+    if (name) quote.name = name;
+    if (notes) quote.notes = notes;
+    if (status) quote.status = status;
     
-    // Create event from quote
-    const event = await Event.create({
-      name: quote.eventName,
-      date: quote.eventDate,
-      endDate: new Date(new Date(quote.eventDate).getTime() + 4 * 60 * 60 * 1000), // Default 4 hours
-      location: quote.eventLocation,
-      clientId: quote.clientId,
-      guestCount: quote.guestCount,
-      budget: quote.total,
-      status: 'confirmed'
-    });
+    await quote.save();
     
-    // Create invoice
-    const invoice = await Invoice.create({
-      quoteId: quote.id,
-      clientId: quote.clientId,
-      eventId: event.id,
-      amount: quote.total,
-      dueDate: new Date(Date.now() + 15 * 24 * 60 * 60 * 1000), // Due in 15 days
-      status: 'pending'
+    // Update items if provided
+    if (items && items.length > 0) {
+      // Delete existing items
+      await QuoteItem.destroy({ where: { quoteId } });
+      
+      // Create new items
+      const quoteItems = items.map(item => ({
+        ...item,
+        quoteId
+      }));
+      
+      await QuoteItem.bulkCreate(quoteItems);
+    }
+    
+    // Get the updated quote with items
+    const updatedQuote = await Quote.findByPk(quoteId, {
+      include: [
+        {
+          model: QuoteItem,
+          as: 'items'
+        }
+      ]
     });
     
     res.status(200).json({
       status: 'success',
-      message: 'Quote approved successfully',
-      data: { 
-        quote,
-        event,
-        invoice
-      }
+      message: 'Quote updated successfully',
+      data: updatedQuote
     });
   } catch (error) {
     res.status(400).json({
+      status: 'error',
+      message: 'Error updating quote',
+      data: null,
+      errors: [error.message]
+    });
+  }
+};
+
+// Delete quote
+exports.deleteQuote = async (req, res) => {
+  try {
+    const quoteId = req.params.id;
+    
+    const quote = await Quote.findByPk(quoteId);
+    
+    if (!quote) {
+      return res.status(404).json({
+        status: 'error',
+        message: 'Quote not found',
+        data: null,
+        errors: ['Quote does not exist']
+      });
+    }
+    
+    // Delete related items first
+    await QuoteItem.destroy({ where: { quoteId } });
+    
+    // Delete the quote
+    await quote.destroy();
+    
+    res.status(200).json({
+      status: 'success',
+      message: 'Quote deleted successfully',
+      data: null
+    });
+  } catch (error) {
+    res.status(500).json({
+      status: 'error',
+      message: 'Error deleting quote',
+      data: null,
+      errors: [error.message]
+    });
+  }
+};
+
+// Approve quote
+exports.approveQuote = async (req, res) => {
+  try {
+    const quoteId = req.params.id;
+    
+    const quote = await Quote.findByPk(quoteId);
+    
+    if (!quote) {
+      return res.status(404).json({
+        status: 'error',
+        message: 'Quote not found',
+        data: null,
+        errors: ['Quote does not exist']
+      });
+    }
+    
+    quote.status = 'approved';
+    quote.approvedAt = new Date();
+    
+    await quote.save();
+    
+    res.status(200).json({
+      status: 'success',
+      message: 'Quote approved successfully',
+      data: quote
+    });
+  } catch (error) {
+    res.status(500).json({
       status: 'error',
       message: 'Error approving quote',
       data: null,

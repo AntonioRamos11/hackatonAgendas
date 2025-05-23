@@ -1,5 +1,5 @@
 const { DataTypes } = require('sequelize');
-const { sequelize } = require('../config/database');
+const sequelize = require('../config/database').sequelize;
 
 const Invoice = sequelize.define('Invoice', {
   id: {
@@ -9,37 +9,82 @@ const Invoice = sequelize.define('Invoice', {
   },
   quoteId: {
     type: DataTypes.UUID,
-    allowNull: true  // Can be null if created without a quote
+    allowNull: true,
+    references: {
+      model: 'Quotes',
+      key: 'id'
+    }
   },
   clientId: {
     type: DataTypes.UUID,
-    allowNull: false
+    allowNull: false,
+    references: {
+      model: 'Users',
+      key: 'id'
+    }
   },
   eventId: {
     type: DataTypes.UUID,
-    allowNull: false
+    allowNull: false,
+    references: {
+      model: 'Events',
+      key: 'id'
+    }
   },
   amount: {
     type: DataTypes.DECIMAL(10, 2),
     allowNull: false
   },
+  status: {
+    type: DataTypes.ENUM('pending', 'paid', 'partial', 'cancelled'),
+    defaultValue: 'pending'
+  },
   dueDate: {
     type: DataTypes.DATE,
     allowNull: false
   },
-  status: {
-    type: DataTypes.STRING,
-    defaultValue: 'pending',
-    validate: {
-      isIn: [['pending', 'paid', 'overdue', 'canceled']]
+  notes: {
+    type: DataTypes.TEXT
+  }
+});
+
+const Payment = sequelize.define('Payment', {
+  id: {
+    type: DataTypes.UUID,
+    defaultValue: DataTypes.UUIDV4,
+    primaryKey: true
+  },
+  invoiceId: {
+    type: DataTypes.UUID,
+    allowNull: false,
+    references: {
+      model: 'Invoices',
+      key: 'id'
     }
   },
-  paymentMethod: DataTypes.STRING,
-  paymentDate: DataTypes.DATE,
-  notes: DataTypes.TEXT
-}, {
-  timestamps: true
+  amount: {
+    type: DataTypes.DECIMAL(10, 2),
+    allowNull: false
+  },
+  method: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
+  reference: {
+    type: DataTypes.STRING
+  },
+  date: {
+    type: DataTypes.DATE,
+    defaultValue: DataTypes.NOW
+  },
+  notes: {
+    type: DataTypes.TEXT
+  }
 });
+
+// Define relationships
+Payment.belongsTo(Invoice, { foreignKey: 'invoiceId' });
+Invoice.hasMany(Payment, { as: 'payments', foreignKey: 'invoiceId' });
 
 // Fix the setupAssociations function to avoid circular dependencies
 const setupAssociations = () => {
@@ -63,5 +108,6 @@ const setupAssociations = () => {
 
 module.exports = {
   Invoice,
+  Payment,
   setupAssociations
 };

@@ -32,6 +32,7 @@ router.get('/v1/events/:id/timeline', authenticateToken, eventController.getEven
 router.get('/v1/clients', authenticateToken, authorizeRoles('admin', 'staff'), clientController.getClients);
 router.post('/v1/clients', authenticateToken, authorizeRoles('admin', 'staff'), clientController.addClient);
 router.get('/v1/clients/:id/events', authenticateToken, clientController.getClientEvents);
+router.get('/v1/clients/:id', authenticateToken, authorizeRoles('admin', 'staff'), clientController.getClientById);
 
 // Add this line right after your client routes
 router.get('/v1/user-events/:id', authenticateToken, clientController.getClientEvents);
@@ -45,7 +46,7 @@ router.get('/v1/staff/:id/schedule', authenticateToken, staffController.getStaff
 router.get('/v1/inventory', authenticateToken, inventoryController.getInventory);
 router.post('/v1/inventory/update', authenticateToken, authorizeRoles('admin', 'staff'), inventoryController.updateInventory);
 router.get('/v1/inventory/availability', authenticateToken, inventoryController.checkAvailability);
-1// Add this line to your inventory routes:
+// Add this line to your inventory routes:
 router.post('/v1/inventory', authenticateToken, authorizeRoles('admin', 'staff'), inventoryController.createInventoryItem);
 
 // Quote routes

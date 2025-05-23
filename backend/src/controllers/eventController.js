@@ -179,3 +179,80 @@ exports.getEventTimeline = async (req, res) => {
     });
   }
 };
+
+// Add this method to your controller:
+
+exports.deleteEvent = async (req, res) => {
+  try {
+    const eventId = req.params.id;
+    const event = await Event.findByPk(eventId);
+    
+    if (!event) {
+      return res.status(404).json({
+        status: 'error',
+        message: 'Event not found',
+        data: null,
+        errors: ['Event does not exist']
+      });
+    }
+    
+    await event.destroy();
+    
+    res.status(200).json({
+      status: 'success',
+      message: 'Event deleted successfully',
+      data: null
+    });
+  } catch (error) {
+    res.status(500).json({
+      status: 'error',
+      message: 'Error deleting event',
+      data: null,
+      errors: [error.message]
+    });
+  }
+};
+
+// Also add this method for the status update endpoint:
+exports.updateEventStatus = async (req, res) => {
+  try {
+    const eventId = req.params.id;
+    const { status } = req.body;
+    
+    if (!status) {
+      return res.status(400).json({
+        status: 'error',
+        message: 'Status is required',
+        data: null,
+        errors: ['Status field is missing']
+      });
+    }
+    
+    const event = await Event.findByPk(eventId);
+    
+    if (!event) {
+      return res.status(404).json({
+        status: 'error',
+        message: 'Event not found',
+        data: null,
+        errors: ['Event does not exist']
+      });
+    }
+    
+    event.status = status;
+    await event.save();
+    
+    res.status(200).json({
+      status: 'success',
+      message: 'Event status updated successfully',
+      data: event
+    });
+  } catch (error) {
+    res.status(500).json({
+      status: 'error',
+      message: 'Error updating event status',
+      data: null,
+      errors: [error.message]
+    });
+  }
+};

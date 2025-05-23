@@ -1,3 +1,4 @@
+const { sequelize } = require('../config/database');
 const Inventory = require('../models/Inventory');
 const { Op } = require('sequelize');
 
@@ -132,6 +133,130 @@ exports.createInventoryItem = async (req, res) => {
     res.status(400).json({
       status: 'error',
       message: 'Error creating inventory item',
+      data: null,
+      errors: [error.message]
+    });
+  }
+};
+
+// Get inventory item by ID
+exports.getInventoryItemById = async (req, res) => {
+  try {
+    const inventory = await Inventory.findByPk(req.params.id);
+    
+    if (!inventory) {
+      return res.status(404).json({
+        status: 'error',
+        message: 'Inventory item not found',
+        data: null,
+        errors: ['Item does not exist']
+      });
+    }
+    
+    res.status(200).json({
+      status: 'success',
+      message: 'Inventory item retrieved successfully',
+      data: inventory
+    });
+  } catch (error) {
+    res.status(500).json({
+      status: 'error',
+      message: 'Error retrieving inventory item',
+      data: null,
+      errors: [error.message]
+    });
+  }
+};
+
+// Get inventory categories
+exports.getInventoryCategories = async (req, res) => {
+  try {
+    // Get distinct categories from inventory items
+    const categories = await Inventory.findAll({
+      attributes: [[sequelize.fn('DISTINCT', sequelize.col('category')), 'category']],
+      raw: true
+    });
+    
+    const categoryList = categories.map(c => c.category);
+    
+    res.status(200).json({
+      status: 'success',
+      message: 'Inventory categories retrieved successfully',
+      data: categoryList
+    });
+  } catch (error) {
+    res.status(500).json({
+      status: 'error',
+      message: 'Error retrieving inventory categories',
+      data: null,
+      errors: [error.message]
+    });
+  }
+};
+
+// Update inventory item details
+exports.updateInventoryItem = async (req, res) => {
+  try {
+    const { name, category, description, unitCost } = req.body;
+    const inventory = await Inventory.findByPk(req.params.id);
+    
+    if (!inventory) {
+      return res.status(404).json({
+        status: 'error',
+        message: 'Inventory item not found',
+        data: null,
+        errors: ['Item does not exist']
+      });
+    }
+    
+    // Update fields that are provided
+    if (name) inventory.name = name;
+    if (category) inventory.category = category;
+    if (description) inventory.description = description;
+    if (unitCost) inventory.unitCost = unitCost;
+    
+    await inventory.save();
+    
+    res.status(200).json({
+      status: 'success',
+      message: 'Inventory item updated successfully',
+      data: inventory
+    });
+  } catch (error) {
+    res.status(400).json({
+      status: 'error',
+      message: 'Error updating inventory item',
+      data: null,
+      errors: [error.message]
+    });
+  }
+};
+
+// Delete inventory item
+exports.deleteInventoryItem = async (req, res) => {
+  try {
+    const inventory = await Inventory.findByPk(req.params.id);
+    
+    if (!inventory) {
+      return res.status(404).json({
+        status: 'error',
+        message: 'Inventory item not found',
+        data: null,
+        errors: ['Item does not exist']
+      });
+    }
+    
+    await inventory.destroy();
+    
+    res.status(200).json({
+      status: 'success',
+      message: 'Inventory item deleted successfully',
+      data: null
+    });
+  } catch (error) {
+    res.status(500).json({
+      status: 'error',
+      message: 'Error deleting inventory item',
       data: null,
       errors: [error.message]
     });
